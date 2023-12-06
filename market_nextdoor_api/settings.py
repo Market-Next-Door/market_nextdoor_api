@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'market_nextdoor_api',
     'rest_framework',
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,16 +87,6 @@ WSGI_APPLICATION = 'market_nextdoor_api.wsgi.application'
 
 import dj_database_url
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'USER': 'ugwmlvclwxqmov',
-#         'NAME': 'd4epbgargpb2vb',
-#         'PASSWORD': '8a2c64eac485ae5be4c6fe7d545b66288e698925e140cc2c9679309a62a659f2',
-#         'HOST': 'ec2-44-213-228-107.compute-1.amazonaws.com',
-#         'PORT': "5432",
-#     }
-# }
 
 if "DATABASE_URL" in os.environ:
     import dj_database_url
@@ -161,3 +153,5 @@ django_heroku.settings(locals())
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOWED_ALL_ORIGINS = True
