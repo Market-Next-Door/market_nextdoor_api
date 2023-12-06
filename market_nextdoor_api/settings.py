@@ -11,21 +11,27 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Heroku settings
+# Allow Heroku to set the DJANGO_SETTINGS_MODULE environment variable
+SETTINGS_MODE = os.getenv("DJANGO_SETTINGS_MODULE", "practice.settings.production")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uekxanbp(ohlglk#7y+leu@v7vvo*9w&$+pl9g6#z7nz+9wb%3'
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
+# SECRET_KEY = 'django-insecure-uekxanbp(ohlglk#7y+leu@v7vvo*9w&$+pl9g6#z7nz+9wb%3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -76,10 +82,16 @@ WSGI_APPLICATION = 'market_nextdoor_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'ugwmlvclwxqmov',
+        'NAME': 'd4epbgargpb2vb',
+        'PASSWORD': '8a2c64eac485ae5be4c6fe7d545b66288e698925e140cc2c9679309a62a659f2',
+        'HOST': 'ec2-44-213-228-107.compute-1.amazonaws.com',
+        'PORT': "5432",
     }
 }
 
@@ -117,8 +129,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+import django_heroku
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = 'static/'
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
