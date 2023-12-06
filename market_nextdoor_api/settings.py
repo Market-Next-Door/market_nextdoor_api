@@ -85,16 +85,38 @@ WSGI_APPLICATION = 'market_nextdoor_api.wsgi.application'
 
 import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'ugwmlvclwxqmov',
-        'NAME': 'd4epbgargpb2vb',
-        'PASSWORD': '8a2c64eac485ae5be4c6fe7d545b66288e698925e140cc2c9679309a62a659f2',
-        'HOST': 'ec2-44-213-228-107.compute-1.amazonaws.com',
-        'PORT': "5432",
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'USER': 'ugwmlvclwxqmov',
+#         'NAME': 'd4epbgargpb2vb',
+#         'PASSWORD': '8a2c64eac485ae5be4c6fe7d545b66288e698925e140cc2c9679309a62a659f2',
+#         'HOST': 'ec2-44-213-228-107.compute-1.amazonaws.com',
+#         'PORT': "5432",
+#     }
+# }
+
+if "DATABASE_URL" in os.environ:
+    import dj_database_url
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'USER': 'yperpwoaafcytf',
+            'NAME': 'db0ppmrnc5oeg8',
+            'PASSWORD': '25667974dac1303c624eab4abf086d7e4c0bd99a4f0198774e9f037a1f879cfe',
+            'HOST': 'ec2-3-212-70-5.compute-1.amazonaws.com',
+            'PORT': "5432",
+        }
+    }  
+else:
+# Local development settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+
 
 
 # Password validation
