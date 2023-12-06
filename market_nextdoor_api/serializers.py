@@ -15,8 +15,9 @@ class VendorSerializer(serializers.ModelSerializer):
 
 # Items
 class ItemSerializer(serializers.ModelSerializer):
-  vendor = serializers.PrimaryKeyRelatedField(queryset=Vendor.objects.all())
+  # vendor = serializers.PrimaryKeyRelatedField(queryset=Vendor.objects.all())
   # vendor = VendorSerializer(read_only=True)
+  # These need fixing
 
   class Meta:
     model = Item
@@ -30,9 +31,11 @@ class MarketSerializer(serializers.ModelSerializer):
 
 # Preorders
 class PreorderSerializer(serializers.ModelSerializer):
-  item = ItemSerializer(read_only=True)
-  customer = CustomerSerializer(read_only=True)
+  # item = ItemSerializer(read_only=True)
+  # customer = CustomerSerializer(read_only=True)
+  # These need fixing
+
 
   class Meta:
     model = Preorder
-    fields = ['id', 'customer', 'item', 'ready', 'date_created', 'updated_at']
+    fields = ['id', 'customer', 'item', 'ready', 'quantity_requested', 'date_created', 'updated_at']
