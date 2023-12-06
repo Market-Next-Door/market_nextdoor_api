@@ -154,4 +154,7 @@ django_heroku.settings(locals())
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'https://market-next-door-fe-f6728ad38b62.herokuapp.com/',
+    'http://localhost:3000/'
+]
