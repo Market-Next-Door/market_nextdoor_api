@@ -61,8 +61,8 @@ class CustomerTestCase(APITestCase):
     self.assertEqual(Customer.objects.count(), 2)
     self.assertEqual(response.status_code,status.HTTP_200_OK )
     self.assertEqual(response.data["id"], 1)
-    self.assertEqual(response.data["first_name"], "George")
-    self.assertEqual(response.data["last_name"], "Harrison")
+    self.assertEqual(response.data["first_name"], self.customer1.first_name)
+    self.assertEqual(response.data["last_name"], self.customer1.last_name)
     self.assertEqual(response.data["phone"], Customer.objects.get(id=1).phone)
     self.assertEqual(response.data["email"], Customer.objects.get(id=1).email)
 
@@ -70,21 +70,17 @@ class CustomerTestCase(APITestCase):
     customer_id = 1
     url =  reverse('customer_details', args=[customer_id])
     data = {
-      "first_name": "UPDATE",
-      "last_name": "UPDATE",
-      "phone": "UPDATE",
-      "email": "UPDATE",
-      "location": "UPDATE"
+      "email": "UPDATE"
     }
     response = self.client.put(url, data, format='json')
     self.assertEqual(response.status_code,status.HTTP_200_OK )
     self.assertEqual(Customer.objects.count(), 2)
     self.assertEqual(response.data["id"], 1)
-    self.assertEqual(response.data["first_name"], "UPDATE")
-    self.assertEqual(response.data["last_name"], "UPDATE")
-    self.assertEqual(response.data["phone"], "UPDATE")
+    self.assertEqual(response.data["first_name"], self.customer1.first_name)
+    self.assertEqual(response.data["last_name"], self.customer1.last_name)
+    self.assertEqual(response.data["phone"], self.customer1.phone)
     self.assertEqual(response.data["email"], "UPDATE")
-    self.assertEqual(response.data["location"], "UPDATE")
+    self.assertEqual(response.data["location"], self.customer1.location)
 
 
   def test_delete_customer(self):
