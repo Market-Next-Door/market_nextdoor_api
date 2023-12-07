@@ -259,7 +259,7 @@ def create_preorder(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def preorder_details(request, customer_id, preorder_id):
   try:
-    customer = customer.objects.get(pk=customer_id)
+    customer = Customer.objects.get(pk=customer_id)
   except customer.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
