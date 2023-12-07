@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import corsheaders
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'market_nextdoor_api',
     'rest_framework',
-
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,7 +125,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://127.0.0.1:8000",
+    "https://market-next-door-fe-f6728ad38b62.herokuapp.com",
+    "http://*",
+    "https://*",
+]
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
