@@ -36,7 +36,7 @@ jobs:
           name: "Run tests"
           command: |
             . .venv/bin/activate
-            python3 manage.py test 
+            python manage.py test 
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
