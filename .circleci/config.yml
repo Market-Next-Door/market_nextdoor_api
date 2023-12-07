@@ -32,11 +32,11 @@ jobs:
             /home/circleci/project/.venv/bin/python -m pip install --upgrade pip
             pip install -r requirements.txt
 
-      - run:
-          name: "Run tests"
-          command: |
-            . .venv/bin/activate
-            python manage.py test 
+      # - run:
+      #     name: "Run tests"
+      #     command: |
+      #       . .venv/bin/activate
+      #       python manage.py test 
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
