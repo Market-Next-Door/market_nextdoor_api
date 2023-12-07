@@ -112,6 +112,8 @@ class VendorPreorderTestCase(APITestCase):
     self.assertEqual(response.status_code,status.HTTP_200_OK )
     self.assertEqual(response.data["id"], 1)
     self.assertEqual(response.data["ready"], True)
+    self.assertEqual(response.data["packed"], False)
+    self.assertEqual(response.data["fulfilled"], False)
     self.assertEqual(response.data["vendor_id"], self.vendor1.id)
 
 
