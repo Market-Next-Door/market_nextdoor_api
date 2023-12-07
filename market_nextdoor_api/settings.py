@@ -33,7 +33,7 @@ DEBUG = False
 # DEBUG = os.getenv("DEBUG", "False").lower() == "false"
 
 ALLOWED_HOSTS = ["*"]
-
+import corsheaders
 
 # Application definition
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -156,5 +156,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     'https://market-next-door-fe-f6728ad38b62.herokuapp.com/',
-    'http://localhost:3000/'
+    'http://localhost:3000/',
+    'https://127.0.0.1:8000/'
 ]
