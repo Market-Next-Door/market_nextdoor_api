@@ -50,7 +50,7 @@ def get_one_customer(customer):
   return Response(serializer.data)
 
 def update_one_customer(customer, request):
-    customer_data = CustomerSerializer(customer, data=request.data)
+    customer_data = CustomerSerializer(customer, data=request.data, partial=True)
     if customer_data.is_valid():
       customer_data.save()
       return Response(customer_data.data)
@@ -111,7 +111,7 @@ def get_item_details(item):
   return Response(serializer.data)
 
 def update_item(item, data):
-  item_data = ItemSerializer(item, data=data)
+  item_data = ItemSerializer(item, data=data, partial=True)
   if item_data.is_valid():
     item_data.save()
     return Response(item_data.data)
@@ -165,7 +165,7 @@ def get_vendor_details(vendor):
   return Response(serializer.data)
 
 def update_vendor(vendor, data):
-  vendor_data = VendorSerializer(vendor, data=data)
+  vendor_data = VendorSerializer(vendor, data=data, partial=True)
   if vendor_data.is_valid():
     vendor_data.save()
     return Response(vendor_data.data)
@@ -219,7 +219,7 @@ def get_market_details(market):
   return Response(serializer.data)
 
 def update_market(market, data):
-  market_data = MarketSerializer(market, data=data)
+  market_data = MarketSerializer(market, data=data, partial=True)
   if market_data.is_valid():
     market_data.save()
     return Response(market_data.data)
@@ -259,7 +259,7 @@ def create_preorder(request):
 @api_view(['GET', 'PUT', 'DELETE'])
 def preorder_details(request, customer_id, preorder_id):
   try:
-    customer = customer.objects.get(pk=customer_id)
+    customer = Customer.objects.get(pk=customer_id)
   except customer.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
@@ -280,7 +280,7 @@ def get_preorder_details(preorder):
   return Response(serializer.data)
 
 def update_preorder(preorder, data):
-  preorder_data = PreorderSerializer(preorder, data=data)
+  preorder_data = PreorderSerializer(preorder, data=data, partial=True)
   if preorder_data.is_valid():
     preorder_data.save()
     return Response(preorder_data.data)
