@@ -31,6 +31,8 @@ urlpatterns = [
     path('vendors/<int:vendor_id>/items/<int:item_id>/', views.item_details, name='item_details'),
     path('customers/<int:customer_id>/preorders/', views.preorder_list, name='preorder_list'),
     path('customers/<int:customer_id>/preorders/<int:preorder_id>/', views.preorder_details, name='preorder_details'),
+    path('vendors/<int:vendor_id>/preorders/', views.preorder_vendor_list, name='preorder_vendor_list'),
+    path('vendors/<int:vendor_id>/preorders/<int:preorder_id>/', views.preorder_vendor_list_details, name='preorder_vendor_list_details'),
     
     # Cascading endpoints
     # # vendors
