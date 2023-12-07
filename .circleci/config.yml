@@ -29,7 +29,6 @@ jobs:
           command: |
             python -m venv .venv
             . .venv/bin/activate
-            cd market_nextdoor_api
             /home/circleci/project/.venv/bin/python -m pip install --upgrade pip
             pip install -r requirements.txt
 
