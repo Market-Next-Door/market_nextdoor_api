@@ -83,18 +83,26 @@ WSGI_APPLICATION = 'market_nextdoor_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import dj_database_url
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'yperpwoaafcytf',
-        'NAME': 'db0ppmrnc5oeg8',
-        'PASSWORD': '25667974dac1303c624eab4abf086d7e4c0bd99a4f0198774e9f037a1f879cfe',
-        'HOST': 'ec2-3-212-70-5.compute-1.amazonaws.com',
-        'PORT': "5432",
+if "DATABASE_URL" in os.environ:
+    import dj_database_url
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'USER': 'yperpwoaafcytf',
+            'NAME': 'db0ppmrnc5oeg8',
+            'PASSWORD': '25667974dac1303c624eab4abf086d7e4c0bd99a4f0198774e9f037a1f879cfe',
+            'HOST': 'ec2-3-212-70-5.compute-1.amazonaws.com',
+            'PORT': "5432",
+        }
+    }  
+else:
+# Local development settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 
 # Password validation
