@@ -88,8 +88,8 @@ import dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'db0ppmrnc5oeg8',
-        'NAME': 'd4epbgargpb2vb',
+        'USER': 'yperpwoaafcytf',
+        'NAME': 'db0ppmrnc5oeg8',
         'PASSWORD': '25667974dac1303c624eab4abf086d7e4c0bd99a4f0198774e9f037a1f879cfe',
         'HOST': 'ec2-3-212-70-5.compute-1.amazonaws.com',
         'PORT': "5432",
