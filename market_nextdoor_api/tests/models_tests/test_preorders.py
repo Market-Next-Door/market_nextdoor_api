@@ -37,6 +37,7 @@ class PreorderModelTest(TestCase):
       size= "Average",
       availability= True,
       description= "A sharp axe prefered by the Jazz Man.",
+      vendor= self.vendor
       )
     self.item2 = Item.objects.create(
       item_name= "Hunting Knife",
@@ -44,6 +45,7 @@ class PreorderModelTest(TestCase):
       size= "Large",
       availability= True,
       description= "Large Knife used for hunting Sidney.",
+      vendor= self.vendor
       )
     self.item3 = Item.objects.create(
       item_name= "Romulan Ale",
@@ -51,6 +53,7 @@ class PreorderModelTest(TestCase):
       size= "Small Bottle",
       availability= True,
       description= "A highly intoxicating beverage, which is outlawed within the Federation",
+      vendor = self.vendor2
       )
     self.item4 = Item.objects.create(
       item_name= "Redrum",
@@ -58,6 +61,7 @@ class PreorderModelTest(TestCase):
       size= "Large",
       availability= True,
       description= "A large bottle of Redrum.",
+      vendor = self.vendor2
       )
   def test_preorder_creation(self):
     # Test the creation of a Preorder model
