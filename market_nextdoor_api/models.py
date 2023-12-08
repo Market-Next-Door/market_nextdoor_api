@@ -64,6 +64,8 @@ class Preorder(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=False)
     quantity_requested = models.IntegerField(default=1)
     ready = models.BooleanField(default=False)
+    packed = models.BooleanField(default=False)
+    fulfilled = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
