@@ -74,3 +74,16 @@ def test_post_item(self):
   self.assertEqual(response.data["quantity"], 45),
   self.assertEqual(response.data["availability"], True)
   self.assertEqual(response.data["description"], "Nice and fresh tomatoes!")
+
+# GET (show) request test
+def test_item_details(self):
+  url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+  response = self.client.get(url)
+  self.assertEqual(response.status_code,status.HTTP_200_OK )
+  self.assertEqual(response.data["id"], self.item1.id)
+  self.assertEqual(response.data["vendor"], self.vendor1.id)
+  self.assertEqual(response.data["price"], self.item1.price)
+  self.assertEqual(response.data["size"], self.item1.size)
+  self.assertEqual(response.data["quantity"], self.item1.quantity)
+  self.assertEqual(response.data["availability"], self.item1.availability)
+  self.assertEqual(response.data["description"], self.item1.description)
