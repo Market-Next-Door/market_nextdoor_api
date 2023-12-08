@@ -40,7 +40,7 @@ class PreorderSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Preorder
-    fields = ['id', 'customer', 'item', 'ready', 'quantity_requested', 'vendor_id', 'date_created', 'updated_at', ]
+    fields = ['id', 'customer', 'item', 'packed', 'fulfilled', 'ready', 'quantity_requested', 'vendor_id', 'date_created', 'updated_at', ]
 
   def get_vendor_id(self, obj):
     return obj.item.vendor_id 
