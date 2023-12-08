@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import *
+import pdb
+
 
 # Customers
 class CustomerSerializer(serializers.ModelSerializer):
@@ -34,8 +36,11 @@ class PreorderSerializer(serializers.ModelSerializer):
   # item = ItemSerializer(read_only=True)
   # customer = CustomerSerializer(read_only=True)
   # These need fixing
-
+  vendor_id = serializers.SerializerMethodField()
 
   class Meta:
     model = Preorder
-    fields = ['id', 'customer', 'item', 'ready', 'quantity_requested', 'date_created', 'updated_at']
+    fields = ['id', 'customer', 'item', 'packed', 'fulfilled', 'ready', 'quantity_requested', 'vendor_id', 'date_created', 'updated_at', ]
+
+  def get_vendor_id(self, obj):
+    return obj.item.vendor_id 
