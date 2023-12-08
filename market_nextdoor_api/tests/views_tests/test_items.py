@@ -110,3 +110,11 @@ def test_update_item(self):
   self.assertEqual(response.data["quantity"], 5)
   self.assertEqual(response.data["availability"], self.item1.availability)
   self.assertEqual(response.data["description"], "Nice, fresh, and HUGE tomatoes! Cures all illnesses! Maybe not, but are you gonna take that risk??")
+
+# DELETE request test
+def test_delete_item(self):
+  self.assertEqual(Item.objects.count(), 2)
+  url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+  response = self.client.delete(url)
+  self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
+  self.assertEqual(Item.objects.count(), 1)
