@@ -50,7 +50,11 @@ class Item(models.Model):
     description = models.TextField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image = models.ImageField(upload_to='files/images', null=True, blank=True) 
+    image = models.ImageField(upload_to='images/', null=True, blank=True) 
+
+    def delete(self):
+        self.image.delete()
+        super().delete()
 
     def __str__(self):
         return self.item_name
