@@ -51,3 +51,26 @@ class ItemTestCase(APITestCase):
     self.assertEqual(response.data[0]["description"], self.item1.description)
     self.assertEqual(response.data[0]["image"], self.item1.image)
 
+# POST request test
+def test_post_item(self):
+  url = reverse('item_list', args=[self.vendor1.pk])
+  data = {
+    'item_name': "Tomato", 
+    'vendor': 1, 
+    'price': 1.99, 
+    'size': "1lbs", 
+    'quantity': 45, 
+    'availability': True, 
+    'description': "Nice and fresh tomatoes!"
+  }
+  response = self.client.post(url, data)
+  self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+  self.assertEqual(Item.objects.count(), 3)
+  self.assertEqual(response.data["id"], Item.objects.last().id)
+  self.assertEqual(response.data["item_name"], "Tomato")
+  self.assertEqual(response.data["vendor"], self.vendor1.id)
+  self.assertEqual(response.data["price"], '1.99')
+  self.assertEqual(response.data["size"], "1lbs")
+  self.assertEqual(response.data["quantity"], 45),
+  self.assertEqual(response.data["availability"], True)
+  self.assertEqual(response.data["description"], "Nice and fresh tomatoes!")
