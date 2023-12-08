@@ -52,69 +52,69 @@ class ItemTestCase(APITestCase):
     self.assertEqual(response.data[0]["image"], self.item1.image)
 
 # POST request test
-def test_post_item(self):
-  url = reverse('item_list', args=[self.vendor1.pk])
-  data = {
-    'item_name': "Tomato", 
-    'vendor': 1, 
-    'price': 1.99, 
-    'size': "1lbs", 
-    'quantity': 45, 
-    'availability': True, 
-    'description': "Nice and fresh tomatoes!"
-  }
-  response = self.client.post(url, data)
-  self.assertEqual(response.status_code,status.HTTP_201_CREATED)
-  self.assertEqual(Item.objects.count(), 3)
-  self.assertEqual(response.data["id"], Item.objects.last().id)
-  self.assertEqual(response.data["item_name"], "Tomato")
-  self.assertEqual(response.data["vendor"], self.vendor1.id)
-  self.assertEqual(response.data["price"], '1.99')
-  self.assertEqual(response.data["size"], "1lbs")
-  self.assertEqual(response.data["quantity"], 45),
-  self.assertEqual(response.data["availability"], True)
-  self.assertEqual(response.data["description"], "Nice and fresh tomatoes!")
+  def test_post_item(self):
+    url = reverse('item_list', args=[self.vendor1.pk])
+    data = {
+      'item_name': "Tomato", 
+      'vendor': 1, 
+      'price': 1.99, 
+      'size': "1lbs", 
+      'quantity': 45, 
+      'availability': True, 
+      'description': "Nice and fresh tomatoes!"
+    }
+    response = self.client.post(url, data)
+    self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+    self.assertEqual(Item.objects.count(), 3)
+    self.assertEqual(response.data["id"], Item.objects.last().id)
+    self.assertEqual(response.data["item_name"], "Tomato")
+    self.assertEqual(response.data["vendor"], self.vendor1.id)
+    self.assertEqual(response.data["price"], '1.99')
+    self.assertEqual(response.data["size"], "1lbs")
+    self.assertEqual(response.data["quantity"], 45),
+    self.assertEqual(response.data["availability"], True)
+    self.assertEqual(response.data["description"], "Nice and fresh tomatoes!")
 
 # GET (show) request test
-def test_item_details(self):
-  url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
-  response = self.client.get(url)
-  self.assertEqual(response.status_code,status.HTTP_200_OK )
-  self.assertEqual(response.data["id"], self.item1.id)
-  self.assertEqual(response.data["vendor"], self.vendor1.id)
-  self.assertEqual(response.data["price"], self.item1.price)
-  self.assertEqual(response.data["size"], self.item1.size)
-  self.assertEqual(response.data["quantity"], self.item1.quantity)
-  self.assertEqual(response.data["availability"], self.item1.availability)
-  self.assertEqual(response.data["description"], self.item1.description)
+  def test_item_details(self):
+    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    response = self.client.get(url)
+    self.assertEqual(response.status_code,status.HTTP_200_OK )
+    self.assertEqual(response.data["id"], self.item1.id)
+    self.assertEqual(response.data["vendor"], self.vendor1.id)
+    self.assertEqual(response.data["price"], self.item1.price)
+    self.assertEqual(response.data["size"], self.item1.size)
+    self.assertEqual(response.data["quantity"], self.item1.quantity)
+    self.assertEqual(response.data["availability"], self.item1.availability)
+    self.assertEqual(response.data["description"], self.item1.description)
 
 # PUT request test
-def test_update_item(self):
-  url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
-  data = {
-    'item_name': "Tomato", 
-    'vendor': 1, 
-    'price': 99.99, 
-    'size': "10lbs", 
-    'quantity': 5, 
-    'availability': True, 
-    'description': "Nice, fresh, and HUGE tomatoes! Cures all illnesses! Maybe not, but are you gonna take that risk??"
-  }
-  response = self.client.put(url, data, format='json')
-  self.assertEqual(response.status_code,status.HTTP_200_OK )
-  self.assertEqual(Vendor.objects.count(), 1)
-  self.assertEqual(response.data["id"], self.item1.id)
-  self.assertEqual(response.data["vendor"], self.vendor1.id)
-  self.assertEqual(response.data["price"], "99.99")
-  self.assertEqual(response.data["size"], "10lbs")
-  self.assertEqual(response.data["quantity"], 5)
-  self.assertEqual(response.data["availability"], self.item1.availability)
-  self.assertEqual(response.data["description"], "Nice, fresh, and HUGE tomatoes! Cures all illnesses! Maybe not, but are you gonna take that risk??")
+  def test_update_item(self):
+    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    data = {
+      'item_name': "Tomato", 
+      'vendor': 1, 
+      'price': 99.99, 
+      'size': "10lbs", 
+      'quantity': 5, 
+      'availability': True, 
+      'description': "Nice, fresh, and HUGE tomatoes! Cures all illnesses! Maybe not, but are you gonna take that risk??"
+    }
+    response = self.client.put(url, data, format='json')
+    self.assertEqual(response.status_code,status.HTTP_200_OK )
+    self.assertEqual(Vendor.objects.count(), 1)
+    self.assertEqual(response.data["id"], self.item1.id)
+    self.assertEqual(response.data["vendor"], self.vendor1.id)
+    self.assertEqual(response.data["price"], "99.99")
+    self.assertEqual(response.data["size"], "10lbs")
+    self.assertEqual(response.data["quantity"], 5)
+    self.assertEqual(response.data["availability"], self.item1.availability)
+    self.assertEqual(response.data["description"], "Nice, fresh, and HUGE tomatoes! Cures all illnesses! Maybe not, but are you gonna take that risk??")
 
 # DELETE request test
-def test_delete_item(self):
-  self.assertEqual(Item.objects.count(), 2)
-  url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
-  response = self.client.delete(url)
-  self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
-  self.assertEqual(Item.objects.count(), 1)
+  def test_delete_item(self):
+    self.assertEqual(Item.objects.count(), 2)
+    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    response = self.client.delete(url)
+    self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
+    self.assertEqual(Item.objects.count(), 1)
