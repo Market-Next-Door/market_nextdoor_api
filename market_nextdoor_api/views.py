@@ -289,3 +289,53 @@ def update_preorder(preorder, data):
 def delete_preorder(preorder):
   preorder.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+# Preorder CRUD functions - Vendor list (SRP)
+@api_view(['GET'])
+def preorder_vendor_list(request, vendor_id):
+  try:
+    check_vendor = Vendor.objects.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+  if request.method == 'GET':
+    return get_preorder_vendor_list(request, check_vendor)
+
+
+def get_preorder_vendor_list(request, check_vendor):
+  preorders = Preorder.objects.filter(item__vendor=check_vendor)
+  serializer = PreorderSerializer(preorders, many=True)
+  return Response(serializer.data)
+
+@api_view(['GET', 'PUT'])
+def preorder_vendor_list_details(request, vendor_id, preorder_id):
+  try:
+    check_vendor = Vendor.objects.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+  
+  try:
+    preorder = Preorder.objects.get(pk=preorder_id, item__vendor=check_vendor)
+  except Preorder.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+  
+  if request.method == 'GET':
+    return get_preorder_vendor_list_details(preorder)
+  elif request.method == 'PUT':
+    return update_preorder(preorder, request.data)
+  elif request.method == 'DELETE':
+    return delete_preorder(preorder)
+  
+def get_preorder_vendor_list_details(preorder):
+  serializer = PreorderSerializer(preorder)
+  return Response(serializer.data)
+
+def update_preorder(preorder, data):
+  preorder_data = PreorderSerializer(preorder, data=data, partial=True)
+  if preorder_data.is_valid():
+    preorder_data.save()
+    return Response(preorder_data.data)
+  return Response(status=status.HTTP_400_BAD_REQUEST)
+
