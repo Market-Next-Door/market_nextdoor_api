@@ -17,7 +17,7 @@ class CustomerTestCase(APITestCase):
       last_name="Harrison",
       phone="1234567890",
       email="janey@gmail.com",
-    )
+    ) 
 
   def test_customer_list(self):
     url =  reverse('customer_list')
