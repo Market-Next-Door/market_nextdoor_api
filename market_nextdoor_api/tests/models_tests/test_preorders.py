@@ -85,3 +85,4 @@ class PreorderModelTest(TestCase):
     self.assertFalse(preorder.ready)
     self.assertIsNotNone(preorder.date_created)
     self.assertIsNotNone(preorder.updated_at)
+    
