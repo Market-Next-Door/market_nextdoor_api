@@ -52,7 +52,7 @@ class ItemModelTest(TestCase):
     item = Item.objects.create(
       item_name="ToDelete",
       vendor=self.vendor,
-      price=Decimal('19.99'),  # Convert to Decimal
+      price=Decimal('19.99'), 
       size="Medium",
       quantity=3,
       availability=True,

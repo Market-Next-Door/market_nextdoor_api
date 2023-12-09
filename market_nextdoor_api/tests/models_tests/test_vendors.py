@@ -4,10 +4,8 @@ from market_nextdoor_api.models import Vendor, Market
 
 class VendorModelTest(TestCase):
   def setUp(self):
-    # Create a Market instance for testing ForeignKey relationship
     self.market = Market.objects.create(market_name="Test Market")
 
-    # Create a Vendor instance for testing
     self.vendor_data = {
         'market': self.market,
         'vendor_name': 'TestVendor',
