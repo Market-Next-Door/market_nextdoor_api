@@ -231,7 +231,7 @@ def delete_market(market):
 
 
 
-# Preorder CRUD functions (SRP)
+# Preorder CRUD functions
 @api_view(['GET', 'POST'])
 def preorder_list(request, customer_id):
   try:
@@ -338,4 +338,3 @@ def update_preorder(preorder, data):
     preorder_data.save()
     return Response(preorder_data.data)
   return Response(status=status.HTTP_400_BAD_REQUEST)
-

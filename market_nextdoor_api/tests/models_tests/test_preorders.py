@@ -64,7 +64,6 @@ class PreorderModelTest(TestCase):
       vendor = self.vendor2
       )
   def test_preorder_creation(self):
-    # Test the creation of a Preorder model
     preorder = Preorder.objects.create(
         customer=self.customer,
         item=self.item,
@@ -80,7 +79,6 @@ class PreorderModelTest(TestCase):
     self.assertIsNotNone(preorder.updated_at)
 
   def test_default_values(self):
-    # Test default values of the Preorder model
     preorder = Preorder.objects.create(customer=self.customer, item=self.item)
 
     self.assertEqual(preorder.quantity_requested, 1)
