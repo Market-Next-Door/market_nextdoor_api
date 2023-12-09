@@ -71,11 +71,11 @@ def item_list(request, vendor_id):
     return Response(status=status.HTTP_404_NOT_FOUND)
 
   if request.method == 'GET':
-    return get_vendor_item_list(request, check_vendor)
+    return get_item_list(request, check_vendor)
   elif request.method == 'POST':
     return create_item(request)
 
-def get_vendor_item_list(request, check_vendor):
+def get_item_list(request, check_vendor):
   items = Item.objects.filter(vendor=check_vendor)
   serializer = ItemSerializer(items, many=True)
   return Response(serializer.data)
