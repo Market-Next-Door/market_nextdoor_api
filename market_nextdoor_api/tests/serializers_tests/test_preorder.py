@@ -1,5 +1,5 @@
 from django.test import TestCase
-from market_nextdoor_api.models import Preorder, Vendor, Item, Customer
+from market_nextdoor_api.models import Preorder, Vendor, Item, Customer, Market
 from market_nextdoor_api.serializers import PreorderSerializer
 
 class PreorderSerializerTest(TestCase):
@@ -44,7 +44,7 @@ class PreorderSerializerTest(TestCase):
       'image': 'Test Image',
     }
 
-    self.vendor = Vendor.objects.create(**self.vendor_data)
+    self.item = Item.objects.create(**self.item_data)
 
     self.customer_data = {
       'first_name': 'John',
@@ -60,11 +60,12 @@ class PreorderSerializerTest(TestCase):
     self.customer = Customer.objects.create(**self.customer_data)
 
     self.preorder_data = {
-      'vendor_id': self.vendor.id,
-      'item_id': self.item.id,
-      'customer_id': self.customer.id,
+      'customer': self.customer,
+      'item': self.item,
       'quantity_requested': 1,
       'ready': False,
+      'packed': False,
+      'fulfilled': False,
       'date_created': '2023-01-01T00:00:00Z',
       'updated_at': '2023-01-02T00:00:00Z',
     }
@@ -72,20 +73,33 @@ class PreorderSerializerTest(TestCase):
     self.preorder = Preorder.objects.create(**self.preorder_data)
 
     self.serializer_data = {
-      'vendor_id': self.preorder.vendor.id,
-      'item_id': self.preorder.item.id,
-      'customer_id': self.preorder.customer.id,
+      'id': self.preorder.id,
+      'item': self.preorder.item.id,
+      'customer': self.preorder.customer.id,
       'quantity_requested': self.preorder.quantity_requested,
       'ready': self.preorder.ready,
+      'packed': self.preorder.packed,
+      'fulfilled': self.preorder.fulfilled,
       'date_created': self.preorder.date_created.isoformat(),
       'updated_at': self.preorder.updated_at.isoformat(),
     }
 
   def test_preorder_serializer(self):
     serializer = PreorderSerializer(instance=self.preorder)
-    self.assertEqual(serializer.data, self.serializer_data)
-    self.assertEqual(serializer.data['vendor_id'], self.preorder_data['vendor_id'])
-    self.assertEqual(serializer.data['item_id'], self.preorder_data['item_id'])
-    self.assertEqual(serializer.data['customer_id'], self.preorder_data['customer_id'])
+    self.assertEqual(serializer.data['item'], self.preorder_data['item'].id)
+    self.assertEqual(serializer.data['customer'], self.preorder_data['customer'].id)
     self.assertEqual(serializer.data['quantity_requested'], self.preorder_data['quantity_requested'])
     self.assertEqual(serializer.data['ready'], self.preorder_data['ready'])
+    self.assertEqual(serializer.data['packed'], self.preorder_data['packed'])
+    self.assertEqual(serializer.data['fulfilled'], self.preorder_data['fulfilled'])
+
+  def test_preorder_deserializer(self):
+    serializer = PreorderSerializer(data=self.serializer_data)
+    self.assertTrue(serializer.is_valid())
+    deserialized_data = serializer.validated_data
+    self.assertEqual(deserialized_data['item'], self.preorder_data['item'])
+    self.assertEqual(deserialized_data['customer'], self.preorder_data['customer'])
+    self.assertEqual(deserialized_data['quantity_requested'], self.preorder_data['quantity_requested'])
+    self.assertEqual(deserialized_data['ready'], self.preorder_data['ready'])
+    self.assertEqual(deserialized_data['packed'], self.preorder_data['packed'])
+    self.assertEqual(deserialized_data['fulfilled'], self.preorder_data['fulfilled'])
