@@ -16,7 +16,6 @@ class CustomerModelTest(TestCase):
 
   def test_model_fields(self):
       customer = Customer.objects.get(first_name=self.customer.first_name)
-
       # Test the values of the fields
       self.assertEqual(customer.first_name, self.customer.first_name)
       self.assertEqual(customer.last_name, self.customer.last_name)

@@ -23,6 +23,7 @@ def get_customer_list(request):
   return Response(serializer.data)
 
 def create_customer(request):
+  #Similar to creating an user in rails = 
   serializer = CustomerSerializer(data=request.data)
   if serializer.is_valid():
     serializer.save()
