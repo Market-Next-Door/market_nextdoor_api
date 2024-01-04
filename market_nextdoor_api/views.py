@@ -345,6 +345,26 @@ def get_market_locations(request, zipcode):
   api_key = "rTS5CqcxKA"
   BASE_URL = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
   request_url = f'{BASE_URL}?apikey={api_key}&zip={zipcode}&radius=50'
+  head = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36'
+    }
+  try:
+    response = requests.get(request_url, headers=head)
+    response.raise_for_status()
+    data = response.json()
+    refined_data = [
+            {
+                'listing_name': item.get('listing_name', ''),
+                'location_address': item.get('location_address', ''),
+                'location_x': item.get('location_x', ''),
+                'location_y': item.get('location_y', ''),
+                'media_website': item.get('media_website', ''),
+                'location_zipcode': item.get('location_zipcode', '')
+            }
+            for item in data.get('data', [])
+        ]
 
-  response = requests.get(request_url)
-  pdb.set_trace()
+    return JsonResponse(refined_data, safe=False)
+  except requests.RequestException as e:
+    return JsonResponse({'error': str('There are no markets near you')}, status=404)
+  
