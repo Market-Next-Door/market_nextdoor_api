@@ -5,6 +5,7 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 import pdb
+import requests
 
 
 # Customer CRUD functions (SRP)
@@ -338,3 +339,12 @@ def update_preorder(preorder, data):
     preorder_data.save()
     return Response(preorder_data.data)
   return Response(status=status.HTTP_400_BAD_REQUEST)
+
+#USDA Market locations apikey=rTS5CqcxKA&x
+def get_market_locations(request, zipcode):
+  api_key = "rTS5CqcxKA"
+  BASE_URL = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
+  request_url = f'{BASE_URL}?apikey={api_key}&zip={zipcode}&radius=50'
+
+  response = requests.get(request_url)
+  pdb.set_trace()
