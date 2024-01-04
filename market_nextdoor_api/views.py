@@ -365,6 +365,6 @@ def get_market_locations(request, zipcode):
         ]
 
     return JsonResponse(refined_data, safe=False)
-  except requests.RequestException as e:
+  except requests.RequestException:
     return JsonResponse({'error': str('There are no markets near you')}, status=404)
   
