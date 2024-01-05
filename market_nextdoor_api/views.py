@@ -26,10 +26,13 @@ def get_customer_list(request):
   return Response(serializer.data)
 
 def create_customer(request):
+  #Similar to creating an user in rails = 
   serializer = CustomerSerializer(data=request.data)
   if serializer.is_valid():
     serializer.save()
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+  else:
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def customer_details(request, customer_id):
