@@ -6,7 +6,6 @@ from ..serializers import ItemSerializer, VendorSerializer
 from ..models import Item, Vendor
 
 
-# Item CRUD functions (SRP)
 @api_view(['GET', 'POST'])
 def item_list(request, vendor_id):
   try:

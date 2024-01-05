@@ -6,7 +6,6 @@ from ..serializers import PreorderSerializer, CustomerSerializer
 from ..models import Preorder, Customer
 
 
-# Preorder CRUD functions
 @api_view(['GET', 'POST'])
 def preorder_list(request, customer_id):
   try:

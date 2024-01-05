@@ -13,13 +13,11 @@ def vendor_list(request):
   elif request.method == 'POST':
     return create_vendor(request)
 
-# GET (index) Request
 def get_vendor_list(request):
   vendors = Vendor.objects.all()
   serializer = VendorSerializer(vendors, many=True)
   return Response(serializer.data)
 
-# POST Request
 def create_vendor(request):
   serializer = VendorSerializer(data=request.data)
   if serializer.is_valid():
@@ -44,12 +42,10 @@ def get_vendor_object(vendor_id):
   except Vendor.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
 
-# GET (show) Request
 def get_vendor_details(vendor):
   serializer = VendorSerializer(vendor)
   return Response(serializer.data)
 
-# PUT / UPDATE Request
 def update_vendor(vendor, data):
   vendor_data = VendorSerializer(vendor, data=data, partial=True)
   if vendor_data.is_valid():
@@ -57,13 +53,12 @@ def update_vendor(vendor, data):
     return Response(vendor_data.data)
   return Response(vendor_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# DELETE Request
 def delete_vendor(vendor):
   vendor.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-###
+
 # Preorder CRUD functions - Vendor list (SRP)
 @api_view(['GET'])
 def preorder_vendor_list(request, vendor_id):
