@@ -16,24 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from market_nextdoor_api import views
+from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
 urlpatterns = [
-    path('markets/', views.market_list, name='market_list'),
-    path('markets/<int:market_id>/', views.market_details, name='market_details'),
-    path('customers/', views.customer_list, name='customer_list'),
-    path('customers/<int:customer_id>/', views.customer_details, name='customer_details'),
-    path('vendors/', views.vendor_list, name='vendor_list'),
-    path('vendors/<int:vendor_id>/', views.vendor_details, name='vendor_details'),
-    path('vendors/<int:vendor_id>/items/', views.item_list, name='item_list'),
-    path('vendors/<int:vendor_id>/items/<int:item_id>/', views.item_details, name='item_details'),
-    path('customers/<int:customer_id>/preorders/', views.preorder_list, name='preorder_list'),
-    path('customers/<int:customer_id>/preorders/<int:preorder_id>/', views.preorder_details, name='preorder_details'),
-    path('vendors/<int:vendor_id>/preorders/', views.preorder_vendor_list, name='preorder_vendor_list'),
-    path('vendors/<int:vendor_id>/preorders/<int:preorder_id>/', views.preorder_vendor_list_details, name='preorder_vendor_list_details'),
-    path('markets/location/<int:zipcode>/', views.get_market_locations, name='get_market_locations'),
+    path('markets/', market_views.market_list, name='market_list'),
+    path('markets/<int:market_id>/', market_views.market_details, name='market_details'),
+    path('customers/', customer_views.customer_list, name='customer_list'),
+    path('customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    path('vendors/', vendor_views.vendor_list, name='vendor_list'),
+    path('vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
+    path('vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
+    path('vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
+    path('customers/<int:customer_id>/preorders/', preorder_views.preorder_list, name='preorder_list'),
+    path('customers/<int:customer_id>/preorders/<int:preorder_id>/', preorder_views.preorder_details, name='preorder_details'),
+    path('vendors/<int:vendor_id>/preorders/', vendor_views.preorder_vendor_list, name='preorder_vendor_list'),
+    path('vendors/<int:vendor_id>/preorders/<int:preorder_id>/', vendor_views.preorder_vendor_list_details, name='preorder_vendor_list_details'),
+    path('markets/location/<int:zipcode>/', market_views.get_market_locations, name='get_market_locations'),
     
     # Cascading endpoints
     # # vendors
