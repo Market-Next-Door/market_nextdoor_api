@@ -6,6 +6,8 @@ from .serializers import *
 from .models import *
 import pdb
 import requests
+import environ
+import os
 
 
 # Customer CRUD functions (SRP)
@@ -340,11 +342,11 @@ def update_preorder(preorder, data):
     return Response(preorder_data.data)
   return Response(status=status.HTTP_400_BAD_REQUEST)
 
-#USDA Market locations apikey=rTS5CqcxKA&x
+#USDA Market locations apikey=rTS5CqcxKA
 def get_market_locations(request, zipcode):
-  api_key = "rTS5CqcxKA"
+  USDA_API_KEY = os.environ.get('USDA_API_KEY')
   BASE_URL = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
-  request_url = f'{BASE_URL}?apikey={api_key}&zip={zipcode}&radius=50'
+  request_url = f'{BASE_URL}?apikey={USDA_API_KEY}&zip={zipcode}&radius=50'
   head = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36'
     }
@@ -352,6 +354,8 @@ def get_market_locations(request, zipcode):
     response = requests.get(request_url, headers=head)
     response.raise_for_status()
     data = response.json()
+    #Neat list comprehension - this parses the data coming in from the API, the syntax is a bit
+    #different in that the iteration is after declaring the instance of a library on line 374
     refined_data = [
             {
                 'market_name': item.get('listing_name', ''),
