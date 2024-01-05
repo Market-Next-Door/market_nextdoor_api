@@ -346,10 +346,10 @@ def update_preorder(preorder, data):
   return Response(status=status.HTTP_400_BAD_REQUEST)
 
 #USDA Market locations apikey=rTS5CqcxKA
-def get_market_locations(request, zipcode):
+def get_market_locations(request, zipcode, radius):
   USDA_API_KEY = os.environ.get('USDA_API_KEY')
   BASE_URL = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
-  request_url = f'{BASE_URL}?apikey={USDA_API_KEY}&zip={zipcode}&radius=50'
+  request_url = f'{BASE_URL}?apikey={USDA_API_KEY}&zip={zipcode}&radius={radius}'
   head = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36'
     }
