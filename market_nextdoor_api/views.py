@@ -354,12 +354,13 @@ def get_market_locations(request, zipcode):
     data = response.json()
     refined_data = [
             {
-                'listing_name': item.get('listing_name', ''),
-                'location_address': item.get('location_address', ''),
-                'location_x': item.get('location_x', ''),
-                'location_y': item.get('location_y', ''),
-                'media_website': item.get('media_website', ''),
-                'location_zipcode': item.get('location_zipcode', '')
+                'market_name': item.get('listing_name', ''),
+                'address': item.get('location_address', ''),
+                'lat': item.get('location_x', ''),
+                'lon': item.get('location_y', ''),
+                'website': item.get('media_website', ''),
+                'zipcode': item.get('location_zipcode', ''),
+                'phone': item.get('contact_phone', '')
             }
             for item in data.get('data', [])
         ]
