@@ -107,3 +107,14 @@ class MarketLocationsTestCase(APITestCase):
     self.assertIsInstance(response_data[0]['phone'], str)
 
   
+#SAD PATH TESTING
+  @responses.activate
+  @patch.dict('os.environ', {'USDA_API_KEY': 'your_mocked_api_key'})
+  def test_get_market_locations_api_error(self):
+      responses.add(responses.GET, f'{self.usda_api_url}?apikey={os.environ.get("USDA_API_KEY")}&zip={self.zipcode}&radius={self.radius}',
+                    json={'error': 'API failure'}, status=500)
+
+      response = self.client.get(self.endpoint)
+
+      self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+      self.assertJSONEqual(str(response.content, encoding='utf8'), {'error': 'There are no markets near you'})
