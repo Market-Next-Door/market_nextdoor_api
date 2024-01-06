@@ -17,7 +17,7 @@ class MarketLocationsTestCase(APITestCase):
   #This utilizes the new library above to mock environment variables like the API key for USDA
   @patch.dict('os.environ', {'USDA_API_KEY': 'f@kekey123'})
 
-   
+  #Happy path testing
   def test_get_market_locations_succesful_response(self):
     mock_response = {
     "data": [
@@ -83,11 +83,12 @@ class MarketLocationsTestCase(APITestCase):
         }
       ]
     }
+    #This utilizes the new library 'responses' to mock a response
     responses.add(responses.GET, f'{self.usda_api_url}?apikey={os.environ.get("USDA_API_KEY")}&zip={self.zipcode}&radius={self.radius}', json=mock_response, status=200)
 
     response = self.client.get(self.endpoint)
     response_data = response.json()
-    #assertions about responses from the response keys
+    #testing the response keys once parsed by the method
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertIn('market_name', response_data[0])
     self.assertIn('address', response_data[0])
@@ -109,6 +110,9 @@ class MarketLocationsTestCase(APITestCase):
   
 #SAD PATH TESTING
   @responses.activate
+  #something to note about this mock API key, utilizing it in the subsequent f-string, 
+  #you can either use the mocked key itself, or the Environment variable which is USDA_API_KEY
+  #The convention stated to use the env variable as it's closests to how the real code works
   @patch.dict('os.environ', {'USDA_API_KEY': 'your_mocked_api_key'})
   def test_get_market_locations_api_error(self):
       responses.add(responses.GET, f'{self.usda_api_url}?apikey={os.environ.get("USDA_API_KEY")}&zip={self.zipcode}&radius={self.radius}',
