@@ -8,7 +8,6 @@ import pdb
 
 class MarketLocationsTestCase(APITestCase):
   def setUp(self):
-    pdb
     self.usda_api_url = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
     self.zipcode = 84106
     self.radius = 10
