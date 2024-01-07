@@ -38,6 +38,7 @@ class PreorderSerializer(serializers.ModelSerializer):
   def get_vendor_id(self, obj):
     return obj.item.vendor_id 
   
+
 # ManytoMany Test Serializer
 class Preorder_testItemSerializer(serializers.ModelSerializer):
   item_id = serializers.ReadOnlyField(source='item.id')
@@ -47,7 +48,6 @@ class Preorder_testItemSerializer(serializers.ModelSerializer):
   class Meta:
     model = Preorder_testItem
     fields = ['item_id', 'item_name', 'vendor_id', 'quantity']
-
 
 
 class Preorder_testSerializer(serializers.ModelSerializer):

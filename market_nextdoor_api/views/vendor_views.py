@@ -110,6 +110,7 @@ def delete_preorder(preorder):
   preorder.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 #manytomany views testing
 @api_view(['GET', 'POST'])
 def preorder_test_list(request, vendor_id):

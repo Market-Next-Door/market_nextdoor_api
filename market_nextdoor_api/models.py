@@ -69,6 +69,7 @@ class Preorder(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    
 #ManytoMany Test Models
 class Preorder_test(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
