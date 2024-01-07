@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from ..serializers import VendorSerializer, PreorderSerializer
-from ..models import Vendor, Preorder
+from ..serializers import VendorSerializer, PreorderSerializer, Preorder_testSerializer
+from ..models import Vendor, Preorder, Preorder_test, Preorder_testItem
 
 
 @api_view(['GET', 'POST'])
@@ -109,3 +109,20 @@ def update_preorder(preorder, data):
 def delete_preorder(preorder):
   preorder.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
+
+#manytomany views testing
+@api_view(['GET', 'POST'])
+def preorder_test_list(request, vendor_id):
+  try:
+    check_vendor = Vendor.objects.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+  if request.method == 'GET':
+    return get_preorder_test_list(request, check_vendor)
+
+def get_preorder_test_list(request, check_vendor):
+  preorder_tests = Preorder_test.objects.filter(items__vendor=check_vendor).distinct()
+
+  serializer = Preorder_testSerializer(preorder_tests, many=True)
+  return Response(serializer.data)

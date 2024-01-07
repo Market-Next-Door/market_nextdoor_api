@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from ..serializers import PreorderSerializer, CustomerSerializer
-from ..models import Preorder, Customer
+from ..serializers import PreorderSerializer, CustomerSerializer, Preorder_testSerializer
+from ..models import Preorder, Customer, Preorder_test, Preorder_testItem
 
 
 @api_view(['GET', 'POST'])
@@ -63,3 +63,36 @@ def update_preorder(preorder, data):
 def delete_preorder(preorder):
   preorder.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
+
+#manytomany views testing
+@api_view(['GET', 'POST'])
+def preorder_test_list(request, customer_id):
+  try:
+    check_customer = Customer.objects.get(pk=customer_id)
+  except Customer.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+  if request.method == 'GET':
+    return get_preorder_test_list(request, check_customer)
+  elif request.method == 'POST':
+    return create_preorder_test(request, check_customer)
+
+def get_preorder_test_list(request, check_customer):
+  preorder_tests = Preorder_test.objects.filter(customer=check_customer)
+  serializer = Preorder_testSerializer(preorder_tests, many=True)
+  return Response(serializer.data)
+
+def create_preorder_test(request, check_customer):
+  serializer = Preorder_testSerializer(data=request.data)
+  if serializer.is_valid():
+    preorder = serializer.save()
+
+    items = request.data.get('items', [])
+    for item in items:
+      Preorder_testItem.objects.create(
+        preorder=preorder,
+        item_id=item['item'],
+        quantity=item['quantity']
+      )
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

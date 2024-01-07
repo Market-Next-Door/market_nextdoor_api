@@ -68,10 +68,23 @@ class Preorder(models.Model):
     fulfilled = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+#ManytoMany Test Models
+class Preorder_test(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
+    items = models.ManyToManyField(Item, through='Preorder_testItem')
+    ready = models.BooleanField(default=False)
+    packed = models.BooleanField(default=False)
+    fulfilled = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-# class PreorderItem(models.Model):
-#     preorder = models.ForeignKey(Preorder, on_delete=models.CASCADE, null=False)
-#     item = models.ForeignKey(Item, on_delete=models.CASCADE, null=False)
-#     quantity = models.IntegerField(default=1)
-#     date_created = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class Preorder_testItem(models.Model):
+    preorder = models.ForeignKey(Preorder_test, on_delete=models.CASCADE, null=False)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=False)
+    quantity = models.IntegerField(default=1)
+    date_created = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.item.item_name} in {self.preorder}"

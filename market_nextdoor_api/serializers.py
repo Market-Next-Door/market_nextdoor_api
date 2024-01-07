@@ -37,3 +37,21 @@ class PreorderSerializer(serializers.ModelSerializer):
 
   def get_vendor_id(self, obj):
     return obj.item.vendor_id 
+  
+# ManytoMany Test Serializer
+class Preorder_testItemSerializer(serializers.ModelSerializer):
+  item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all(), source='id')
+  
+  class Meta:
+    model = Preorder_testItem
+    fields = ['item', 'quantity']
+
+
+
+class Preorder_testSerializer(serializers.ModelSerializer):
+  items = Preorder_testItemSerializer(many=True, read_only=True)
+
+  class Meta:
+    model = Preorder_test
+    fields = ['id','customer', 'ready', 'packed', 'fulfilled', 'items']
+
