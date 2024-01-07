@@ -873,6 +873,7 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
   <tr>
     <th>Ethan Van Gorkom</th>
     <th>Kaylee Janes</th>
+    <th>Antoine Aube</th>
     <th>Jorja Fleming</th>
     <th>Dylan Timmons</th>
   </tr>
@@ -880,6 +881,7 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
 <tr>
   <td><img src="https://avatars.githubusercontent.com/u/132889569?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/132856753?v=4" width="135" height="135"></td>
+  <td><img src="https://avatars.githubusercontent.com/u/55931218?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/124719472?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/129700694?v=4" width="135" height="135"></td>
 </tr>
@@ -899,6 +901,14 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
             <img src="https://i.stack.imgur.com/tskMh.png" alt="github"> Github
       </a><br>
         <a href="https://www.linkedin.com/in/kaylee-janes" rel="nofollow noreferrer">
+          <img src="https://i.stack.imgur.com/gVE0j.png" alt="linkedin"> LinkedIn
+      </a>
+    </td>
+        <td>
+       <a href="https://github.com/Antoine-Aube" rel="nofollow noreferrer">
+          <img src="https://i.stack.imgur.com/tskMh.png" alt="github"> Github
+      </a><br>
+        <a href="https://www.linkedin.com/in/antoineaube/" rel="nofollow noreferrer">
           <img src="https://i.stack.imgur.com/gVE0j.png" alt="linkedin"> LinkedIn
       </a>
     </td>
