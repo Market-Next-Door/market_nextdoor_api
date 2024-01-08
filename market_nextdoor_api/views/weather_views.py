@@ -25,9 +25,9 @@ def weather(request):
             return JsonResponse(weather_data, safe=False)
 
 def get_weather(request, zipcode):
-    appid = '8fe63c807f5a5c8cce5e070949033a96'
+    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
     URL = 'http://api.openweathermap.org/data/2.5/weather'
-    PARAMS = {'q': zipcode, 'appid': appid}
+    PARAMS = {'q': zipcode, 'appid': WEATHER_API_KEY}
 
     r = requests.get(url=URL, params=PARAMS)
     
