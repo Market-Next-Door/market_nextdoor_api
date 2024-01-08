@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests
 import os
+from django.core.cache import cache
 
 
 # OpenWeather API
@@ -11,7 +12,17 @@ import os
 def weather(request):
     if request.method == 'GET':
         zipcode = request.GET.get('zipcode', '80020')
-        return get_weather(request, zipcode)
+        
+        cached_data = cache.get(zipcode + '_weather_data')
+
+        if cached_data is not None:
+            return JsonResponse(cached_data, safe=False)
+        else:
+            weather_data = get_weather(request, zipcode)
+
+            cache.set(zipcode + '_weather_data', weather_data, 60 * 15)
+
+            return JsonResponse(weather_data, safe=False)
 
 def get_weather(request, zipcode):
     appid = '8fe63c807f5a5c8cce5e070949033a96'
@@ -25,8 +36,10 @@ def get_weather(request, zipcode):
         description = res['weather'][0]['description']
         temp = round(res['main']['temp'] - 255.37)
 
-        return JsonResponse({'description': description, 'temp': temp})
+        weather_data = {'description': description, 'temp': temp}
+
+        return weather_data
     else:
         error_message = f"Error: {r.status_code}"
-        return JsonResponse({'error': error_message}, status=500)
+        return {'error': error_message}
   
