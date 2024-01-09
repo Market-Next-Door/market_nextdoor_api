@@ -80,6 +80,7 @@ def get_market_locations(request, zipcode, radius):
     refined_data = [
             {
                 'market_name': item.get('listing_name', ''),
+                'listing_id': item.get('listing_id', ''),
                 'address': item.get('location_address', ''),
                 'lat': item.get('location_x', ''),
                 'lon': item.get('location_y', ''),
