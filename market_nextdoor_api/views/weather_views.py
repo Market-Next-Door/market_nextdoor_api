@@ -35,8 +35,9 @@ def get_weather(request, zipcode):
         res = r.json()
         description = res['weather'][0]['description']
         temp = round(res['main']['temp'] - 255.37)
+        icon = res['weather'][0]['icon']
 
-        weather_data = {'description': description, 'temp': temp}
+        weather_data = {'description': description, 'temp': temp, 'icon': icon}
 
         return weather_data
     else:

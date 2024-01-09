@@ -915,6 +915,39 @@ Delete /vendors/:vendor_id/preorders/:preorder_id/
 
 </details>
 
+### Weather
+
+```
+Get /weather/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+Parameters: zipcode
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+    {
+        "description": "overcast clouds",
+        "temp": 35,
+        "icon": "04d"
+    }
+```
+
+</details>
+<br>
+
 ### Team
 
 <table>
