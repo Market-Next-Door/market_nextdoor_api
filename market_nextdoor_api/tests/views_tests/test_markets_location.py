@@ -90,6 +90,7 @@ class MarketLocationsTestCase(APITestCase):
     #testing the response keys once parsed by the method
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertIn('market_name', response_data[0])
+    self.assertIn('listing_id', response_data[0])
     self.assertIn('address', response_data[0])
     self.assertIn('lat', response_data[0])
     self.assertIn('lon', response_data[0])
@@ -99,6 +100,7 @@ class MarketLocationsTestCase(APITestCase):
 
     #testing datatypes of values
     self.assertIsInstance(response_data[0]['market_name'], str)
+    self.assertIsInstance(response_data[0]['listing_id'], str)
     self.assertIsInstance(response_data[0]['address'], str)
     self.assertIsInstance(response_data[0]['lat'], str)
     self.assertIsInstance(response_data[0]['lon'], str)
