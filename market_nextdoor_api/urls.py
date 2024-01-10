@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views
+from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views, preorder2_vendors_views, preorder2_customers_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
@@ -36,10 +36,10 @@ urlpatterns = [
     path('markets/location/<int:zipcode>/<int:radius>/', market_views.get_market_locations, name='get_market_locations'),
     #many to many test urls
     
-    path('customers/<int:customer_id>/preorder_test/', preorder_views.preorder_test_list, name='preorder_test_list'),
-    path('customers/<int:customer_id>/preorder_test/<int:preorder_id>/', preorder_views.preorder_test_details, name='preorder_test_details'),
-    path('vendors/<int:vendor_id>/preorder_test/', vendor_views.preorder_test_list, name='preorder_test_vendor_list'),
-    path('vendors/<int:vendor_id>/preorder_test/<int:preorder_id>/', vendor_views.preorder_test_details, name='preorder_test_vendor_details'),
+    path('customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder_test_list'),
+    path('customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder_test_details'),
+    path('vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder_test_vendor_list'),
+    path('vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder_test_vendor_details'),
     # Cascading endpoints
     # # vendors
     # path('markets/<int:market_id>/vendors/', views.vendor_list),
