@@ -64,23 +64,23 @@ def preorder_customer_details(request, customer_id, preorder_id):
   
   if request.method == 'GET':
     return get_preorder_details(preorder)
-  # elif request.method == 'PUT': #Do we want to give customers ability to update and delete orders?
-  #   return update_preorder(preorder, request.data)
-  # elif request.method == 'DELETE':
-  #   return delete_preorder(preorder)
+  elif request.method == 'PUT': #Do we want to give customers ability to update and delete orders?
+    return update_preorder(preorder, request.data)
+  elif request.method == 'DELETE':
+    return delete_preorder(preorder)
   
 def get_preorder_details(preorder):
   serializer = Preorder2Serializer(preorder)
   return Response(serializer.data)
 
-# def update_preorder(preorder, data): 
-#   preorder_data = Preorder2Serializer(preorder, data=data, partial=True)
-#   if preorder_data.is_valid():
-#     preorder_data.save()
-#     return Response(preorder_data.data)
-#   return Response(status=status.HTTP_400_BAD_REQUEST)
+def update_preorder(preorder, data): 
+  preorder_data = Preorder2Serializer(preorder, data=data, partial=True)
+  if preorder_data.is_valid():
+    preorder_data.save()
+    return Response(preorder_data.data)
+  return Response(status=status.HTTP_400_BAD_REQUEST)
 
-# def delete_preorder(preorder): 
-#   preorder.delete()
-#   return Response({'message': "deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+def delete_preorder(preorder): 
+  preorder.delete()
+  return Response({'message': "deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
