@@ -40,20 +40,20 @@ class PreorderSerializer(serializers.ModelSerializer):
   
 
 # ManytoMany Test Serializer
-class Preorder_testItemSerializer(serializers.ModelSerializer):
+class Preorder2ItemSerializer(serializers.ModelSerializer):
   item_id = serializers.ReadOnlyField(source='item.id')
   item_name = serializers.ReadOnlyField(source='item.item_name')
   vendor_id = serializers.ReadOnlyField(source='item.vendor.id')
   
   class Meta:
-    model = Preorder_testItem
+    model = Preorder2Item
     fields = ['item_id', 'item_name', 'vendor_id', 'quantity_requested']
 
 
-class Preorder_testSerializer(serializers.ModelSerializer):
-  items = Preorder_testItemSerializer(many=True, read_only=True, source='preorder_testitem_set')
+class Preorder2Serializer(serializers.ModelSerializer):
+  items = Preorder2ItemSerializer(many=True, read_only=True, source='preorder2item_set')
 
   class Meta:
-    model = Preorder_test
+    model = Preorder2
     fields = ['id','customer', 'ready', 'packed', 'fulfilled', 'items']
 
