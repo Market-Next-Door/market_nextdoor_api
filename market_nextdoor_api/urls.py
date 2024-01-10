@@ -37,7 +37,9 @@ urlpatterns = [
     #many to many test urls
     
     path('customers/<int:customer_id>/preorder_test/', preorder_views.preorder_test_list, name='preorder_test_list'),
+    path('customers/<int:customer_id>/preorder_test/<int:preorder_id>/', preorder_views.preorder_test_details, name='preorder_test_details'),
     path('vendors/<int:vendor_id>/preorder_test/', vendor_views.preorder_test_list, name='preorder_test_vendor_list'),
+    path('vendors/<int:vendor_id>/preorder_test/<int:preorder_id>/', vendor_views.preorder_test_details, name='preorder_test_vendor_details'),
     # Cascading endpoints
     # # vendors
     # path('markets/<int:market_id>/vendors/', views.vendor_list),
