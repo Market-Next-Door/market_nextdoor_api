@@ -90,6 +90,7 @@ def create_preorder_test(request, check_customer):
 
     items = request.data.get('items', [])
     for item in items:
+      
       Preorder_testItem.objects.create(
         preorder=preorder,
         item_id=item['item'],
