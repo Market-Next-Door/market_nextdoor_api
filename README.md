@@ -132,13 +132,61 @@ Response:
 
 </details>
 
+
+#### Markets (External API)
+```
+Get /markets/location/:zipcode/:radius/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+/markets/location/78750/5/
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "market_name": "Texas Farmers' Market at Lakeline",
+        "address": "Lakeline Mall parking lot, behind Sears & Dillard's, Cedar Park, Texas 78613",
+        "lat": "-97.806683",
+        "lon": "30.469036",
+        "website": "www.TexasFarmersMarket.org",
+        "zipcode": "78613",
+        "phone": "5129537959"
+    },
+    {
+        "market_name": "AUSTIN FARMERS MARKET",
+        "address": "9607 RESEARCH BLVD, AUSTIN, Texas 78759",
+        "lat": "-97.741448",
+        "lon": "30.387094",
+        "website": "www.farmergeorge.market",
+        "zipcode": "78759",
+        "phone": "9562867775"
+    }
+]
+```
+
+</details>
+<br>
+
 ---
 
 ### Customers
 
 ```
 Get /customers/  (for all customers)
-Get /customers/:customer_id (for single customer)
+Get /customers/:customer_id/ (for single customer)
 ```
 
 <details close>
@@ -226,7 +274,7 @@ Response:
 <br>
 
 ```
-Put /customers/:customer_id
+Put /customers/:customer_id/
 ```
 
 <details close>
@@ -267,7 +315,7 @@ Response:
 <br>
 
 ```
-Delete /customer/:customer_id
+Delete /customer/:customer_id/
 ```
 
 <details close>
@@ -286,7 +334,7 @@ ___
 
 ```
 Get /vendors/  (for all vendors)
-Get /vendors/:vendor_id (for single vendor)
+Get /vendors/:vendor_id/ (for single vendor)
 ```
 
 <details close>
@@ -374,7 +422,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id
+Put /vendors/:vendor_id/
 ```
 
 <details close>
@@ -417,7 +465,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id
+Delete /vendors/:vendor_id/
 ```
 
 <details close>
@@ -433,7 +481,7 @@ Delete /vendors/:vendor_id
 ### Items
 
 ```
-Get /vendors/:vendor_id/items
+Get /vendors/:vendor_id/items/
 ```
 
 <details close>
@@ -474,7 +522,7 @@ Response:
 <br>
 
 ```
-Post /vendors/:vendor_id/items
+Post /vendors/:vendor_id/items/
 ```
 
 <details close>
@@ -522,7 +570,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id/items/:item_id
+Put /vendors/:vendor_id/items/:item_id/
 ```
 
 <details close>
@@ -569,7 +617,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id/items/:item_id
+Delete /vendors/:vendor_id/items/:item_id/
 ```
 
 <details close>
@@ -586,7 +634,7 @@ Delete /vendors/:vendor_id/items/:item_id
 ### (customer)
 
 ```
-Get /customers/:customer_id/preorders
+Get /customers/:customer_id/preorders/
 ```
 
 <details close>
@@ -626,7 +674,7 @@ Response:
 <br>
 
 ```
-Post /customers/:customer_id/preorders
+Post /customers/:customer_id/preorders/
 ```
 
 <details close>
@@ -667,7 +715,7 @@ Response:
 <br>
 
 ```
-Put /customers/:customer_id/preorders/:preorder_id
+Put /customers/:customer_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -708,7 +756,7 @@ Response:
 <br>
 
 ```
-Delete /customers/:customer_id/preorders/:preorder_id
+Delete /customers/:customer_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -764,7 +812,7 @@ Response:
 <br>
 
 ```
-Post /vendors/:vendor_id/preorders/:preorder_id
+Post /vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -810,7 +858,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id/preorders/:preorder_id
+Put /vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -854,7 +902,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id/preorders/:preorder_id
+Delete /vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -867,12 +915,46 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
 
 </details>
 
+### Weather
+
+```
+Get /weather/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+Parameters: zipcode
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+    {
+        "description": "overcast clouds",
+        "temp": 35,
+        "icon": "04d"
+    }
+```
+
+</details>
+<br>
+
 ### Team
 
 <table>
   <tr>
     <th>Ethan Van Gorkom</th>
     <th>Kaylee Janes</th>
+    <th>Antoine Aube</th>
     <th>Jorja Fleming</th>
     <th>Dylan Timmons</th>
   </tr>
@@ -880,6 +962,7 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
 <tr>
   <td><img src="https://avatars.githubusercontent.com/u/132889569?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/132856753?v=4" width="135" height="135"></td>
+  <td><img src="https://avatars.githubusercontent.com/u/55931218?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/124719472?v=4" width="135" height="135"></td>
   <td><img src="https://avatars.githubusercontent.com/u/129700694?v=4" width="135" height="135"></td>
 </tr>
@@ -899,6 +982,14 @@ Delete /vendors/:vendor_id/preorders/:preorder_id
             <img src="https://i.stack.imgur.com/tskMh.png" alt="github"> Github
       </a><br>
         <a href="https://www.linkedin.com/in/kaylee-janes" rel="nofollow noreferrer">
+          <img src="https://i.stack.imgur.com/gVE0j.png" alt="linkedin"> LinkedIn
+      </a>
+    </td>
+        <td>
+       <a href="https://github.com/Antoine-Aube" rel="nofollow noreferrer">
+          <img src="https://i.stack.imgur.com/tskMh.png" alt="github"> Github
+      </a><br>
+        <a href="https://www.linkedin.com/in/antoineaube/" rel="nofollow noreferrer">
           <img src="https://i.stack.imgur.com/gVE0j.png" alt="linkedin"> LinkedIn
       </a>
     </td>

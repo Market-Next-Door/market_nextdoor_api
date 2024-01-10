@@ -63,7 +63,7 @@ def delete_market(market):
 
 
 
-#USDA Market locations apikey=rTS5CqcxKA
+#USDA Market locations 
 def get_market_locations(request, zipcode, radius):
   USDA_API_KEY = os.environ.get('USDA_API_KEY')
   BASE_URL = "https://www.usdalocalfoodportal.com/api/farmersmarket/"
@@ -80,6 +80,7 @@ def get_market_locations(request, zipcode, radius):
     refined_data = [
             {
                 'market_name': item.get('listing_name', ''),
+                'listing_id': item.get('listing_id', ''),
                 'address': item.get('location_address', ''),
                 'lat': item.get('location_x', ''),
                 'lon': item.get('location_y', ''),
