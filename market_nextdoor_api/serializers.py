@@ -47,7 +47,7 @@ class Preorder_testItemSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Preorder_testItem
-    fields = ['item_id', 'item_name', 'vendor_id', 'quantity']
+    fields = ['item_id', 'item_name', 'vendor_id', 'quantity_requested']
 
 
 class Preorder_testSerializer(serializers.ModelSerializer):

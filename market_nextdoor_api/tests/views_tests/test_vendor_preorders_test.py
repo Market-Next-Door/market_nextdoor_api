@@ -63,12 +63,12 @@ class VendorPreorderTestCase(APITestCase):
     self.preorderitem1 = Preorder_testItem.objects.create(
       preorder=self.preorder1,
       item=self.item1,
-      quantity=2
+      quantity_requested=2
     )
     Preorder_testItem.objects.create(
       preorder=self.preorder1,
       item=self.item2,
-      quantity=1
+      quantity_requested=1
     )
 
     self.preorder2 = Preorder_test.objects.create(
@@ -80,12 +80,12 @@ class VendorPreorderTestCase(APITestCase):
     Preorder_testItem.objects.create(
       preorder=self.preorder2,
       item=self.item2,
-      quantity=2
+      quantity_requested=2
     )
     Preorder_testItem.objects.create(
       preorder=self.preorder2,
       item=self.item2,
-      quantity=1
+      quantity_requested=1
     )
 
   def test_vendor_preorder_test_list(self):
@@ -102,7 +102,7 @@ class VendorPreorderTestCase(APITestCase):
     self.assertEqual(len(response.data[0]["items"]), 2)
     self.assertEqual(response.data[0]["items"][0]["item_id"], self.item1.id)
     self.assertEqual(response.data[0]["items"][0]["vendor_id"], self.vendor1.id)
-    self.assertEqual(response.data[0]["items"][0]["quantity"], self.preorderitem1.quantity)
+    self.assertEqual(response.data[0]["items"][0]["quantity_requested"], self.preorderitem1.quantity_requested)
 
 
 

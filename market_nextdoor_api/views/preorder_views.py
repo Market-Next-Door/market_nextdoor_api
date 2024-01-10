@@ -94,7 +94,7 @@ def create_preorder_test(request, check_customer):
       Preorder_testItem.objects.create(
         preorder=preorder,
         item_id=item['item'],
-        quantity=item['quantity']
+        quantity_requested=item['quantity']
       )
     return Response(serializer.data, status=status.HTTP_201_CREATED)
   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

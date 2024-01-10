@@ -65,12 +65,12 @@ class CustomerPreorderTestCase(APITestCase):
     self.preorderitem1 = Preorder_testItem.objects.create(
       preorder=self.preorder1,
       item=self.item1,
-      quantity=2
+      quantity_requested=2
     )
     Preorder_testItem.objects.create(
       preorder=self.preorder1,
       item=self.item2,
-      quantity=1
+      quantity_requested=1
     )
 
     self.preorder2 = Preorder_test.objects.create(
@@ -82,12 +82,12 @@ class CustomerPreorderTestCase(APITestCase):
     Preorder_testItem.objects.create(
       preorder=self.preorder2,
       item=self.item2,
-      quantity=2
+      quantity_requested=2
     )
     Preorder_testItem.objects.create(
       preorder=self.preorder2,
       item=self.item2,
-      quantity=1
+      quantity_requested=1
     )
 
   def test_customer_preorder_test_post(self):
@@ -116,7 +116,7 @@ class CustomerPreorderTestCase(APITestCase):
     new_preorder = Preorder_test.objects.last()
     first_preorder_item = Preorder_testItem.objects.filter(preorder=new_preorder.pk, item_id=self.item1.pk)
     second_preorder_item = Preorder_testItem.objects.filter(preorder=new_preorder.pk, item_id=self.item2.pk)
-    # pdb.set_trace()
+
     self.assertEqual(response.data["id"], new_preorder.pk)
     self.assertEqual(response.data["customer"], new_preorder.customer.id)
     self.assertEqual(response.data["ready"], new_preorder.ready)
@@ -126,10 +126,55 @@ class CustomerPreorderTestCase(APITestCase):
     self.assertEqual(response.data["items"][0]["item_id"], new_preorder.items.first().id)
     self.assertEqual(response.data["items"][0]["item_name"], new_preorder.items.first().item_name)
     self.assertEqual(response.data["items"][0]["vendor_id"], new_preorder.items.first().vendor.id)
-    self.assertEqual(response.data["items"][0]["quantity"], first_preorder_item[0].quantity)
+    self.assertEqual(response.data["items"][0]["quantity_requested"], first_preorder_item[0].quantity_requested)
     self.assertEqual(response.data["items"][1]["item_name"], new_preorder.items.last().item_name)
     self.assertEqual(response.data["items"][1]["vendor_id"], new_preorder.items.last().vendor.id)
-    self.assertEqual(response.data["items"][1]["quantity"], second_preorder_item[0].quantity)
+    self.assertEqual(response.data["items"][1]["quantity_requested"], second_preorder_item[0].quantity_requested)
+
+  def test_customer_preorder_test_post_sadpath(self):
+    url = reverse('preorder_test_list', args=[self.customer.pk])
+    data = {
+        "ready": "true",
+        "packed": "false",
+        "fulfilled": "false",
+        "items": [
+            {
+                "item": self.item1.pk,
+                "quantity": "5"
+            },
+            {
+                "item": self.item2.pk,
+                "quantity": "2"
+            }
+        ]
+    }
+    json_data = json.dumps(data)
+
+    response = self.client.post(url, data=json_data, content_type='application/json')
+
+    self.assertEqual(response.status_code,status.HTTP_400_BAD_REQUEST)
+    self.assertEqual(response.data['customer'][0], 'This field is required.')
+
+  def test_customer_preorder_test_post_edge(self):
+    #testing here to see if preorder can be created without adding items, because there is no data nested within 'items', it's not necessary to set data as JSON
+    url = reverse('preorder_test_list', args=[self.customer.pk])
+    data = {
+        "customer": self.customer.pk,
+        "ready": "true",
+        "packed": "false",
+        "fulfilled": "false",
+        "items": []
+    }
+    # json_data = json.dumps(data)
+
+    response = self.client.post(url, data)
+
+    self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+    new_preorder = Preorder_test.objects.last()
+    self.assertEqual(len(response.data["items"]), 0)
+    self.assertEqual(response.data["items"], [])
+
+
 
 
 
