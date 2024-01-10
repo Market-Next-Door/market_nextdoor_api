@@ -3,7 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import PreorderSerializer, CustomerSerializer, Preorder_testSerializer
-from ..models import Preorder, Customer, Preorder_test, Preorder_testItem
+from ..models import Preorder, Customer, Preorder_test, Preorder_testItem, Item
+import pdb
 
 
 @api_view(['GET', 'POST'])
@@ -87,14 +88,57 @@ def create_preorder_test(request, check_customer):
   serializer = Preorder_testSerializer(data=request.data)
   if serializer.is_valid():
     preorder = serializer.save()
-
-    items = request.data.get('items', [])
-    for item in items:
+    response = preorder_item_helper(request, preorder, serializer)
+    return response
+  else:
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  
+def preorder_item_helper(request, preorder, serializer):
+  items = request.data.get('items', [])
+  for item_data in items:
+    try:
+      item = Item.objects.get(pk=item_data["item"])
+    except Item.DoesNotExist:
+      return Response({"error":f'Item {item_data["item"]} does not exist'}, status=status.HTTP_404_NOT_FOUND)
       
-      Preorder_testItem.objects.create(
-        preorder=preorder,
-        item_id=item['item'],
-        quantity_requested=item['quantity']
+    Preorder_testItem.objects.create(
+      preorder=preorder,
+      item_id=item.id,
+      quantity_requested=item_data['quantity']
       )
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
-  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+  return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def preorder_test_details(request, customer_id, preorder_id):
+  try:
+    customer = Customer.objects.get(pk=customer_id)
+  except customer.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+  
+  try:
+    preorder = Preorder_test.objects.get(pk=preorder_id, customer=customer)
+  except Preorder.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+  
+  if request.method == 'GET':
+    return get_preorder_details(preorder)
+  elif request.method == 'PUT':
+    return update_preorder(preorder, request.data)
+  elif request.method == 'DELETE':
+    return delete_preorder(preorder)
+  
+def get_preorder_details(preorder):
+  serializer = Preorder_testSerializer(preorder)
+  return Response(serializer.data)
+
+def update_preorder(preorder, data):
+  preorder_data = Preorder_testSerializer(preorder, data=data, partial=True)
+  if preorder_data.is_valid():
+    preorder_data.save()
+    return Response(preorder_data.data)
+  return Response(status=status.HTTP_400_BAD_REQUEST)
+
+def delete_preorder(preorder): 
+  preorder.delete()
+  return Response(status=status.HTTP_204_NO_CONTENT)
