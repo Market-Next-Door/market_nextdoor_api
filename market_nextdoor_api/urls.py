@@ -17,10 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views, weather_views, preorder2_vendors_views, preorder2_customers_views
+from .views.v2 import (
+  market_views as v2_market_views, 
+  customer_views as v2_customer_views, 
+  vendor_views as v2_vendor_views, 
+  item_views as v2_item_views, 
+  preorder_views as v2_preorder_views, #Not using this in v2
+  weather_views as v2_weather_views, #Not using this in v2
+  preorder2_vendors_views as v2_preorder2_vendors_views, 
+  preorder2_customers_views as v2_preorder2_customers_views
+)
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
 urlpatterns = [
+    # V1 Endpoints
     path('markets/', market_views.market_list, name='market_list'),
     path('markets/<int:market_id>/', market_views.market_details, name='market_details'),
     path('customers/', customer_views.customer_list, name='customer_list'),
@@ -33,26 +44,33 @@ urlpatterns = [
     path('customers/<int:customer_id>/preorders/<int:preorder_id>/', preorder_views.preorder_details, name='preorder_details'),
     path('vendors/<int:vendor_id>/preorders/', vendor_views.preorder_vendor_list, name='preorder_vendor_list'),
     path('vendors/<int:vendor_id>/preorders/<int:preorder_id>/', vendor_views.preorder_vendor_list_details, name='preorder_vendor_list_details'),
-    path('markets/location/<int:zipcode>/<int:radius>/', market_views.get_market_locations, name='get_market_locations'),
-
-    path('weather/', weather_views.weather, name='weather'),
-    
     path('customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
     path('customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
     path('vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
     path('vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder2_vendor_details'),
-    # Cascading endpoints
-    # # vendors
-    # path('markets/<int:market_id>/vendors/', views.vendor_list),
-    # path('markets/<int:market_id>/vendors/<int:vendor_id>/', views.vendor_details),
-    # # items
-    # path('markets/<int:market_id>/vendors/<int:vendor_id>/items/', views.vendor_item_list),
-    # path('markets/<int:market_id>/vendors/<int:vendor_id>/items/<int:item_id>/', views.vendor_item_details),
-    # # customers
-    # path('markets/<int:market_id>/customers/', views.customer_list),
-    # path('markets/<int:market_id>/customers/<int:customer_id>/', views.customer_details),
-    # # preorders
-    # path('markets/<int:market_id>/customers/<int:customer_id>/preorders/', views.customer_preorder_list),
-    # path('markets/<int:market_id>/customers/<int:customer_id>/preorders/<int:preorder_id>/', views.customer_preorder_details),
+
+    # External APIs
+    path('markets/location/<int:zipcode>/<int:radius>/', market_views.get_market_locations, name='get_market_locations'),
+    path('weather/', weather_views.weather, name='weather'),
+    
+    # V2 Endpoints
+    # markets
+    path('api/v2/markets/', v2_market_views.market_list, name='market_list'),
+    path('api/v2/markets/<int:market_id>/', v2_market_views.market_details, name='v2_market_details'),
+    # vendors
+    path('api/v2/markets/<int:market_id>/vendors/', v2_vendor_views.vendor_list, name='v2vendor_list'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/', v2_vendor_views.vendor_details, name='v2_vendor_details'),
+    # customers
+    path('api/v2/markets/<int:market_id>/customers/', v2_customer_views.customer_list, name='v2_customer_list'),
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/', v2_customer_views.customer_details, name='v2_customer_details'),
+    # items
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/items/', v2_item_views.item_list, name='v2_item_list'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/items/<int:item_id>/', v2_item_views.item_details, name='v2_item_details'),
+    # preorders
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/', v2_preorder2_customers_views.preorder_customer_list, name='v2_preorder2_list'),
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', v2_preorder2_customers_views.preorder_customer_details, name='v2_preorder2_details'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', v2_preorder2_vendors_views.preorder_test_list, name='v2_preorder2_vendor_list'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', v2_preorder2_vendors_views.preorder_test_details, name='v2_preorder2_vendor_details'),
+
     path('admin/', admin.site.urls),
 ]
