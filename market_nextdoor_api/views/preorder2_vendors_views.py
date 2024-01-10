@@ -58,12 +58,12 @@ def preorder_item_helper(request, preorder, check_vendor, serializer):
 def preorder_test_details(request, vendor_id, preorder_id):
   try:
     vendor = Vendor.objects.get(pk=vendor_id)
-  except vendor.DoesNotExist:
+  except Vendor.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
   try:
     preorder = Preorder2.objects.get(pk=preorder_id)
-  except preorder.DoesNotExist:
+  except Preorder2.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
   if request.method == 'GET':
