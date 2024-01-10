@@ -3,7 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import PreorderSerializer, CustomerSerializer
-from ..models import Preorder, Customer
+from ..models import Preorder, Customer, Preorder2, Preorder2Item, Item
+import pdb
 
 
 @api_view(['GET', 'POST'])
@@ -63,3 +64,4 @@ def update_preorder(preorder, data):
 def delete_preorder(preorder):
   preorder.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
+
