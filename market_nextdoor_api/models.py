@@ -124,7 +124,7 @@ class Market2(models.Model):
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     vendors = models.ManyToManyField(Vendor2, through='Vendor2Market')
-    vendors = models.ManyToManyField(Customer2, through='Customer2Market')
+    customers = models.ManyToManyField(Customer2, through='Customer2Market')
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
