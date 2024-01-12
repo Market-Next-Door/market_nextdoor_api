@@ -144,6 +144,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://*",
     "https://*",
 ]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'PUT',
+]
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
