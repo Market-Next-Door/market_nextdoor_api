@@ -28,11 +28,12 @@ Welcome to the backend repository of Market Next Door! Market Next Door is a app
 ## Tech Stack
 <a href="https://www.python.org/" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" height="50" /></a>
 <a href="https://www.djangoproject.com/" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" height="50" /></a>
+<a href="https://aws.amazon.com/?nc2=h_lg" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="Amazon Web Services logo" height="50" /></a>
 - **Python:** Our primary programming language offering simplicity and versatility
 - **Django REST Framework:** Used for building API's, ensuring a scalable and secure connection between our frontend and backend services.
 
 ## Key Features 
-1. **AWS Integration:** 
+1. **AWS Integration:** S3 file storage and CloudFront CDN to deliver the S3 assets.
 2. **Data Management:** Employs Django ORM for seamless database queries and data manipulation.
 3. **Preorder Management:** Handles all CRUD operations related to Preorders, enabling the creation, updates, and deletion.
 ---
