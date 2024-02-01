@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from ..serializers import PreorderSerializer, CustomerSerializer, Preorder2Serializer
-from ..models import Preorder, Customer, Preorder2, Preorder2Item, Item
+from ..serializers import PreorderSerializer, CustomerSerializer
+from ..models import Preorder, Customer, PreorderItem, Item
 import pdb
 
 #manytomany views testing
@@ -20,12 +20,12 @@ def preorder_customer_list(request, customer_id):
     return create_preorder(request, check_customer)
 
 def get_preorder_list(request, check_customer):
-  preorder_tests = Preorder2.objects.filter(customer=check_customer)
-  serializer = Preorder2Serializer(preorder_tests, many=True)
+  preorder_tests = Preorder.objects.filter(customer=check_customer)
+  serializer = PreorderSerializer(preorder_tests, many=True)
   return Response(serializer.data)
 
 def create_preorder(request, check_customer):
-  serializer = Preorder2Serializer(data=request.data)
+  serializer = PreorderSerializer(data=request.data)
   if serializer.is_valid():
     preorder = serializer.save()
     response = preorder_item_helper(request, preorder, serializer)
@@ -39,10 +39,9 @@ def preorder_item_helper(request, preorder, serializer):
     try:
       item = Item.objects.get(pk=item_data["item"])
     except Item.DoesNotExist:
-      return Response({"error":f'Item {item_data["item"]} does not exist'},
-                      status=status.HTTP_404_NOT_FOUND)
+      return Response({"error":f'Item {item_data["item"]} does not exist'}, status=status.HTTP_404_NOT_FOUND)
       
-    Preorder2Item.objects.create(
+    PreorderItem.objects.create(
       preorder=preorder,
       item_id=item.id,
       quantity_requested=item_data['quantity']
@@ -58,8 +57,8 @@ def preorder_customer_details(request, customer_id, preorder_id):
     return Response(status=status.HTTP_404_NOT_FOUND)
   
   try:
-    preorder = Preorder2.objects.get(pk=preorder_id, customer=customer)
-  except Preorder2.DoesNotExist:
+    preorder = Preorder.objects.get(pk=preorder_id, customer=customer)
+  except Preorder.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
   if request.method == 'GET':
@@ -70,11 +69,11 @@ def preorder_customer_details(request, customer_id, preorder_id):
     return delete_preorder(preorder)
   
 def get_preorder_details(preorder):
-  serializer = Preorder2Serializer(preorder)
+  serializer = PreorderSerializer(preorder)
   return Response(serializer.data)
 
 def update_preorder(preorder, data): 
-  preorder_data = Preorder2Serializer(preorder, data=data, partial=True)
+  preorder_data = PreorderSerializer(preorder, data=data, partial=True)
   if preorder_data.is_valid():
     preorder_data.save()
     return Response(preorder_data.data)
