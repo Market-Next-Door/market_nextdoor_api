@@ -17,16 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views, weather_views, preorder2_vendors_views, preorder2_customers_views
-from .views.v2 import (
-  market_views as v2_market_views, 
-  customer_views as v2_customer_views, 
-  vendor_views as v2_vendor_views, 
-  item_views as v2_item_views, 
-  preorder_views as v2_preorder_views, #Not using this in v2
-  weather_views as v2_weather_views, #Not using this in v2
-  preorder2_vendors_views as v2_preorder2_vendors_views, 
-  preorder2_customers_views as v2_preorder2_customers_views
-)
 from rest_framework.urlpatterns import format_suffix_patterns
 
 
@@ -37,23 +27,29 @@ urlpatterns = [
     
     # V2 Endpoints
     # markets
-    path('api/v2/markets/', v2_market_views.market_list, name='market_list'),
-    path('api/v2/markets/<int:market_id>/', v2_market_views.market_details, name='v2_market_details'),
+    path('api/v2/markets/', market_views.market_list, name='market_list'),
+    path('api/v2/markets/<int:market_id>/', market_views.market_details, name='market_details'),
     # vendors
-    path('api/v2/markets/<int:market_id>/vendors/', v2_vendor_views.vendor_list, name='v2vendor_list'),
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/', v2_vendor_views.vendor_details, name='v2_vendor_details'),
+    path('api/v2/vendors/', vendor_views.vendor_list, name='vendor_list'),
+    path('api/v2/vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
+    ## vendors by market
+    path('api/v2/markets/<int:market_id>/vendors/', vendor_views.vendor_list, name='vendor_list'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
     # customers
-    path('api/v2/markets/<int:market_id>/customers/', v2_customer_views.customer_list, name='v2_customer_list'),
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/', v2_customer_views.customer_details, name='v2_customer_details'),
+    path('api/v2/customers/', customer_views.customer_list, name='customer_list'),
+    path('api/v2/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    ## customers by market
+    path('api/v2/markets/<int:market_id>/customers/', customer_views.customer_list, name='customer_list'),
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
     # items
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/items/', v2_item_views.item_list, name='v2_item_list'),
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/items/<int:item_id>/', v2_item_views.item_details, name='v2_item_details'),
+    path('api/v2/vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
+    path('api/v2/vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
     # customer's preorders
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/', v2_preorder2_customers_views.preorder_customer_list, name='v2_preorder2_list'),
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', v2_preorder2_customers_views.preorder_customer_details, name='v2_preorder2_details'),
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
+    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
     # vendor's preorders
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', v2_preorder2_vendors_views.preorder_test_list, name='v2_preorder2_vendor_list'),
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', v2_preorder2_vendors_views.preorder_test_details, name='v2_preorder2_vendor_details'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
+    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder2_vendor_details'),
 
     path('admin/', admin.site.urls),
 ]
