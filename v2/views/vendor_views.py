@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import VendorSerializer, PreorderSerializer
-from ..models import Vendor, Preorder, Preorder2, Preorder2Item, Item
+from ..models import Vendor, Preorder, Market, Item
 import pdb
 
 
@@ -58,6 +58,67 @@ def delete_vendor(vendor):
   vendor.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
 
+# Vendor by Market
+@api_view(['GET', 'POST'])
+def vendor_by_market_list(request, market_id):
+  if request.method == 'GET':
+    return get_vendor_list(request)
+  elif request.method == 'POST':
+    return create_vendor(request)
+
+  try:
+    return Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+def get_vendor_by_market_list(request):
+  vendors = Vendor.objects.all()
+  serializer = VendorSerializer(vendors, many=True)
+  return Response(serializer.data)
+
+def create_vendor_by_market(request):
+  serializer = VendorSerializer(data=request.data)
+  if serializer.is_valid():
+    serializer.save()
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def vendor_by_market_details(request, vendor_id, market_id):
+  vendor = get_vendor_by_market_object(vendor_id)
+  
+  if request.method == 'GET':
+    return get_vendor_by_market_details(vendor)
+  elif request.method == 'PUT':
+    return update_vendor_by_market(vendor, request.data)
+  elif request.method == 'DELETE':
+    return delete_vendor_by_market(vendor)
+
+  try:
+    return Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+  
+def get_vendor_by_market_object(market_id, vendor_id):
+  try:
+    return Vendor.objects.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
+def get_vendor_by_market_details(vendor):
+  serializer = VendorSerializer(vendor)
+  return Response(serializer.data)
+
+def update_vendor_by_market(vendor, data):
+  vendor_data = VendorSerializer(vendor, data=data, partial=True)
+  if vendor_data.is_valid():
+    vendor_data.save()
+    return Response(vendor_data.data)
+  return Response(vendor_data.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def delete_vendor_by_market(vendor):
+  vendor.delete()
+  return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Preorder CRUD functions - Vendor list (SRP)
