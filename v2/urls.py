@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
 from .views import market_views, customer_views, vendor_views, item_views, customer_views, preorder_views, weather_views, preorder2_vendors_views, preorder2_customers_views
 from rest_framework.urlpatterns import format_suffix_patterns
 
@@ -27,29 +28,27 @@ urlpatterns = [
     
     # V2 Endpoints
     # markets
-    path('api/v2/markets/', market_views.market_list, name='market_list'),
-    path('api/v2/markets/<int:market_id>/', market_views.market_details, name='market_details'),
+    path('markets/', market_views.market_list, name='market_list'),
+    path('markets/<int:market_id>/', market_views.market_details, name='market_details'),
     # vendors
-    path('api/v2/vendors/', vendor_views.vendor_list, name='vendor_list'),
-    path('api/v2/vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
+    path('vendors/', vendor_views.vendor_list, name='vendor_list'),
+    path('vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
     ## vendors by market
-    path('api/v2/markets/<int:market_id>/vendors/', vendor_views.vendor_list, name='vendor_list'),
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
+    path('markets/<int:market_id>/vendors/', vendor_views.vendor_by_market_list, name='vendor_by_market_list'),
+    path('markets/<int:market_id>/vendors/<int:vendor_id>/', vendor_views.vendor_by_market_details, name='vendor_by_market_details'),
     # customers
-    path('api/v2/customers/', customer_views.customer_list, name='customer_list'),
-    path('api/v2/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    path('customers/', customer_views.customer_list, name='customer_list'),
+    path('customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
     ## customers by market
-    path('api/v2/markets/<int:market_id>/customers/', customer_views.customer_list, name='customer_list'),
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    path('markets/<int:market_id>/customers/', customer_views.customer_list, name='customer_list'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
     # items
-    path('api/v2/vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
-    path('api/v2/vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
+    path('vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
+    path('vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
     # customer's preorders
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
-    path('api/v2/markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
     # vendor's preorders
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
-    path('api/v2/markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder2_vendor_details'),
-
-    path('admin/', admin.site.urls),
+    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
+    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder2_vendor_details')
 ]
