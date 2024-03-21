@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'market_nextdoor_api',
     'rest_framework',
     'corsheaders',
+    'v1',
+    'v2',
 
     'django.contrib.admin',
     'django.contrib.auth',
