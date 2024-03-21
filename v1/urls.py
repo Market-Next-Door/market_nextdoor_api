@@ -23,18 +23,25 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     # V1 Endpoints
+    # markets
     path('markets/', market_views.market_list, name='market_list'),
     path('markets/<int:market_id>/', market_views.market_details, name='market_details'),
+    # customers
     path('customers/', customer_views.customer_list, name='customer_list'),
     path('customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    # vendors
     path('vendors/', vendor_views.vendor_list, name='vendor_list'),
     path('vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
+    # items
     path('vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
     path('vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
+    # customer preorders
     path('customers/<int:customer_id>/preorders/', preorder_views.preorder_list, name='preorder_list'),
     path('customers/<int:customer_id>/preorders/<int:preorder_id>/', preorder_views.preorder_details, name='preorder_details'),
+    # vendor preorders
     path('vendors/<int:vendor_id>/preorders/', vendor_views.preorder_vendor_list, name='preorder_vendor_list'),
     path('vendors/<int:vendor_id>/preorders/<int:preorder_id>/', vendor_views.preorder_vendor_list_details, name='preorder_vendor_list_details'),
+    # Many to many
     path('customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
     path('customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
     path('vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
