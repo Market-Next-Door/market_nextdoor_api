@@ -58,6 +58,7 @@ def delete_vendor(vendor):
   vendor.delete()
   return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 # Vendor by Market
 @api_view(['GET'])
 def vendors_by_market_list(request, market_id):
@@ -96,32 +97,46 @@ def vendor_by_market_details(request, vendor_id, market_id):
   return Response(serializer.data)
 
 
-# Preorder CRUD functions - Vendor list (SRP)
+# Vendor Preorders
 @api_view(['GET'])
-def preorder_vendor_list(request, vendor_id):
+def preorder_by_vendor_list(request, market_id, vendor_id):
+  # Input validation
+  if not (isinstance(market_id, int) and market_id > 0):
+    return Response({"error": "Invalid market id."}, status=status.HTTP_400_BAD_REQUEST)
+  if not (isinstance(vendor_id, int) and vendor_id > 0):
+    return Response({"error": "Invalid vendor id."}, status=status.HTTP_400_BAD_REQUEST)
+  
   try:
-    check_vendor = Vendor.objects.get(pk=vendor_id)
+    market = Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
+  try:
+    vendor = market.vendors.get(pk=vendor_id)
   except Vendor.DoesNotExist:
-    return Response(status=status.HTTP_404_NOT_FOUND)
+    return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
 
-  if request.method == 'GET':
-    return get_preorder_vendor_list(request, check_vendor)
-
-
-def get_preorder_vendor_list(request, check_vendor):
-  preorders = Preorder.objects.filter(item__vendor=check_vendor)
+  preorders = Preorder.objects.filter(items__vendor=vendor)
   serializer = PreorderSerializer(preorders, many=True)
   return Response(serializer.data)
 
 @api_view(['GET', 'PUT'])
-def preorder_vendor_list_details(request, vendor_id, preorder_id):
-  try:
-    check_vendor = Vendor.objects.get(pk=vendor_id)
-  except Vendor.DoesNotExist:
-    return Response(status=status.HTTP_404_NOT_FOUND)
+def preorder_by_vendor_details(request, market_id, vendor_id, preorder_id):
+  # Input validation
+  if not (isinstance(market_id, int) and market_id > 0):
+    return Response({"error": "Invalid market id."}, status=status.HTTP_400_BAD_REQUEST)
+  if not (isinstance(vendor_id, int) and vendor_id > 0):
+    return Response({"error": "Invalid vendor id."}, status=status.HTTP_400_BAD_REQUEST)
   
   try:
-    preorder = Preorder.objects.get(pk=preorder_id, item__vendor=check_vendor)
+    market = Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
+  try:
+    vendor = market.vendors.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
+  try:
+    preorder = Preorder.objects.get(pk=preorder_id, items__vendor=vendor)
   except Preorder.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
@@ -129,8 +144,6 @@ def preorder_vendor_list_details(request, vendor_id, preorder_id):
     return get_preorder_vendor_list_details(preorder)
   elif request.method == 'PUT':
     return update_preorder(preorder, request.data)
-  elif request.method == 'DELETE':
-    return delete_preorder(preorder)
   
 def get_preorder_vendor_list_details(preorder):
   serializer = PreorderSerializer(preorder)
@@ -142,8 +155,3 @@ def update_preorder(preorder, data):
     preorder_data.save()
     return Response(preorder_data.data)
   return Response(status=status.HTTP_400_BAD_REQUEST) 
-
-def delete_preorder(preorder):
-  preorder.delete()
-  return Response(status=status.HTTP_204_NO_CONTENT)
-
