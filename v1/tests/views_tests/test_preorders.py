@@ -1,8 +1,10 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
-from market_nextdoor_api.models import Customer, Item, Vendor, Preorder
-from market_nextdoor_api.serializers import PreorderSerializer
+from v1.models import Customer, Item, Vendor, Preorder
+from v1.serializers import PreorderSerializer
+from django.urls import reverse
+import pdb
 
 class PreorderViewTests(TestCase):
   def setUp(self):
@@ -40,20 +42,23 @@ class PreorderViewTests(TestCase):
     }
 
   def test_preorder_list_get_happy_path(self):
-    url = f'/customers/{self.customer.id}/preorders/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/'
+    # url = reverse('preorder_list', [self.customer.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertEqual(len(response.data), 0)
     self.assertEqual(response.data, [])
 
   def test_preorder_list_post_happy_path(self):
-    url = f'/customers/{self.customer.id}/preorders/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/'
+    # url = reverse('preorder_list', [self.customer.pk])
     response = self.client.post(url, data=self.valid_preorder_data, format='json')
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
     self.assertEqual(Preorder.objects.count(), 1)
 
   def test_preorder_list_post_sad_path(self):
-    url = f'/customers/{self.customer.id}/preorders/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/'
+    # url = reverse('preorder_list', [self.customer.pk])
     response = self.client.post(url, data=self.invalid_preorder_data, format='json')
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     self.assertEqual(Preorder.objects.count(), 0)
@@ -65,7 +70,8 @@ class PreorderViewTests(TestCase):
         quantity_requested=2,
         ready=False
     )
-    url = f'/customers/{self.customer.id}/preorders/{preorder.id}/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/{preorder.id}/'
+    # url = reverse('preorder_list', [self.customer.pk, self.valid_preorder_data.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code, status.HTTP_200_OK)
     self.assertEqual(response.data['customer'], self.customer.id)
@@ -73,7 +79,8 @@ class PreorderViewTests(TestCase):
     self.assertEqual(response.data['quantity_requested'], 2)
 
   def test_preorder_details_get_sad_path(self):
-    url = f'/customers/{self.customer.id}/preorders/9999999/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/9999999/'
+    # url = reverse('preorder_list', [self.customer.pk, self.invalid_preorder_data.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -84,7 +91,8 @@ class PreorderViewTests(TestCase):
         quantity_requested=2,
         ready=False
     )
-    url = f'/customers/{self.customer.id}/preorders/{preorder.id}/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/{preorder.id}/'
+    # url = reverse('preorder_list', [self.customer.pk, self.valid_preorder_data.pk])
     data = self.valid_preorder_data
 
     response = self.client.put(url, data=data, content_type='application/json')
@@ -93,7 +101,8 @@ class PreorderViewTests(TestCase):
     self.assertEqual(updated_preorder.quantity_requested, data['quantity_requested'])
 
   def test_preorder_details_put_sad_path(self):
-    url = f'/preorders/{self.customer.id}/9999999/'  
+    url = f'/api/v1/preorders/{self.customer.id}/9999999/'
+    # url = reverse('preorder_list', [self.customer.pk, self.valid_preorder_data.pk])
     data = self.valid_preorder_data
 
     response = self.client.put(url, data=data, format='json')
@@ -106,7 +115,8 @@ class PreorderViewTests(TestCase):
       quantity_requested=2,
       ready=False
     )
-    url = f'/customers/{self.customer.id}/preorders/{preorder.id}/'
+    url = f'/api/v1/customers/{self.customer.id}/preorders/{preorder.id}/'
+    # url = reverse('preorder_list', [self.customer.pk, self.valid_preorder_data.pk])
 
     response = self.client.delete(url)
     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
@@ -114,7 +124,8 @@ class PreorderViewTests(TestCase):
     self.assertEqual(Preorder.objects.count(), 0)
 
   def test_preorder_details_delete_sad_path(self):
-    url = f'/customers/{self.customer.id}/preorders/9999999/' 
+    url = f'/api/v1/customers/{self.customer.id}/preorders/9999999/'
+    # url = reverse('preorder_list', [self.customer.pk, self.invalid_preorder_data.pk])
     response = self.client.delete(url)
     self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
     self.assertEqual(Preorder.objects.count(), 0)
