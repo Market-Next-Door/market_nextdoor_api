@@ -26,7 +26,9 @@ class CustomerSerializerInvalidTest(TestCase):
       "first_name": "George",
       "last_name": "Harrison",
       "phone": "1111111111",
-      "email": "gh@gmail.com"    }
+      "email": "gh@gmail.com"    
+    }
+    
     serializer = CustomerSerializer(data=data)
     self.assertFalse(serializer.is_valid())
 
