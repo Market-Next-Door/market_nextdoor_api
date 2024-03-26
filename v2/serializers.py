@@ -13,7 +13,7 @@ class CustomerSerializer(serializers.ModelSerializer):
 class VendorSerializer(serializers.ModelSerializer):
   class Meta:
     model = Vendor
-    fields = ['id', 'market', 'vendor_name', 'first_name', 'last_name', 'phone', 'email', 'password', 'location', 'date_created', 'updated_at']
+    fields = ['id', 'vendor_name', 'first_name', 'last_name', 'phone', 'email', 'password', 'location', 'date_created', 'updated_at']
 
 # Items
 class ItemSerializer(serializers.ModelSerializer):
