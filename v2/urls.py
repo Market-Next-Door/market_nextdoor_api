@@ -46,9 +46,9 @@ urlpatterns = [
     path('vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
     path('vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
     # customer's preorders
-    path('markets/<int:market_id>/customers/<int:customer_id>/preorders2/', preorder2_customers_views.preorder_customer_list, name='preorder2_list'),
-    path('markets/<int:market_id>/customers/<int:customer_id>/preorders2/<int:preorder_id>/', preorder2_customers_views.preorder_customer_details, name='preorder2_details'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/preorders/', customer_views.preorder_by_customer_list, name='preorder_list'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/preorders/<int:preorder_id>/', customer_views.preorder_by_customer_details, name='preorder_details'),
     # vendor's preorders
-    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/', preorder2_vendors_views.preorder_test_list, name='preorder2_vendor_list'),
-    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders2/<int:preorder_id>/', preorder2_vendors_views.preorder_test_details, name='preorder2_vendor_details')
+    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders/', vendor_views.preorder_by_vendor_list, name='preorder_vendor_list'),
+    path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders/<int:preorder_id>/', vendor_views.preorder_by_vendor_details, name='preorder_vendor_details')
 ]
