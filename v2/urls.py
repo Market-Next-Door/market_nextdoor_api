@@ -34,14 +34,14 @@ urlpatterns = [
     path('vendors/', vendor_views.vendor_list, name='vendor_list'),
     path('vendors/<int:vendor_id>/', vendor_views.vendor_details, name='vendor_details'),
     ## vendors by market
-    path('markets/<int:market_id>/vendors/', vendor_views.vendor_by_market_list, name='vendor_by_market_list'),
+    path('markets/<int:market_id>/vendors/', vendor_views.vendors_by_market_list, name='vendor_by_market_list'),
     path('markets/<int:market_id>/vendors/<int:vendor_id>/', vendor_views.vendor_by_market_details, name='vendor_by_market_details'),
     # customers
     path('customers/', customer_views.customer_list, name='customer_list'),
     path('customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
     ## customers by market
-    path('markets/<int:market_id>/customers/', customer_views.customer_list, name='customer_list'),
-    path('markets/<int:market_id>/customers/<int:customer_id>/', customer_views.customer_details, name='customer_details'),
+    path('markets/<int:market_id>/customers/', customer_views.customers_by_market_list, name='customer_list'),
+    path('markets/<int:market_id>/customers/<int:customer_id>/', customer_views.customer_by_market_details, name='customer_details'),
     # items
     path('vendors/<int:vendor_id>/items/', item_views.item_list, name='item_list'),
     path('vendors/<int:vendor_id>/items/<int:item_id>/', item_views.item_details, name='item_details'),
