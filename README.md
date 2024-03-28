@@ -12,23 +12,33 @@ Welcome to the backend repository of Market Next Door! Market Next Door is a app
 - [Key Features](#key-features)
 - [Getting Started](#getting-started)
 - [RESTful Endpoints](#restful-endpoints)
-  - [Markets](#markets)
-  - [Customers](#customers)
-  - [Vendors](#vendors)
-  - [Items](#items)
-  - [Preorders](#preorders)
+  - [V1](#v1)
+    - [Markets](#markets)
+    - [Customers](#customers)
+    - [Vendors](#vendors)
+    - [Items](#items)
+    - [Preorders](#preorders)
+  - [V2](#v2)
+    - [Markets](#markets)
+    - [Customers](#customers)
+    - [Vendors](#vendors)
+    - [Customers by Market](#customers-by-market)
+    - [Vendors by Market](#vendors-by-market)
+    - [Items](#items)
+    - [Customer Preorders](#customer-preorders)
+    - [Vendor Preorders](#vendor-preorders)
 - [Team](#team)
 ---
 
 ## Directory
-[Hosted Website]()
+[Hosted Website](https://market-next-door-fe-f6728ad38b62.herokuapp.com/)
 
-[Hosted Server]()
+[Hosted Server](https://quiet-depths-54407-77a00505f51e.herokuapp.com/)
 
 ## Tech Stack
 <a href="https://www.python.org/" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" height="50" /></a>
 <a href="https://www.djangoproject.com/" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" height="50" /></a>
-<a href="https://aws.amazon.com/?nc2=h_lg" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" alt="Amazon Web Services logo" height="50" /></a>
+<a href="https://aws.amazon.com/?nc2=h_lg" target="_blank"><img style="margin: 15px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="Amazon Web Services logo" height="50" /></a>
 - **Python:** Our primary programming language offering simplicity and versatility
 - **Django REST Framework:** Used for building API's, ensuring a scalable and secure connection between our frontend and backend services.
 
@@ -50,9 +60,12 @@ Base url to reach the endpoints listed below:
 https://quiet-depths-54407-77a00505f51e.herokuapp.com/
 ```
 
+## V1
+<details close>
+
 ### Markets
 ```
-Get /markets/
+Get /api/v1/markets/
 ```
 
 <details close>
@@ -90,7 +103,7 @@ Response:
 <br>
 
 ```
-Post /markets/
+Post /api/v1/markets/
 ```
 
 <details close>
@@ -136,7 +149,7 @@ Response:
 
 #### Markets (External API)
 ```
-Get /markets/location/:zipcode/:radius/
+Get /api/v1/markets/location/:zipcode/:radius/
 ```
 
 <details close>
@@ -145,7 +158,7 @@ Get /markets/location/:zipcode/:radius/
 
 Request: <br>
 ```
-/markets/location/78750/5/
+/api/v1/markets/location/78750/5/
 ```
 
 | Code | Description |
@@ -186,8 +199,8 @@ Response:
 ### Customers
 
 ```
-Get /customers/  (for all customers)
-Get /customers/:customer_id/ (for single customer)
+Get /api/v1/customers/  (for all customers)
+Get /api/v1/customers/:customer_id/ (for single customer)
 ```
 
 <details close>
@@ -231,7 +244,7 @@ Response:
 <br>
 
 ```
-Post /customers/
+Post /api/v1/customers/
 ```
 
 <details close>
@@ -275,7 +288,7 @@ Response:
 <br>
 
 ```
-Put /customers/:customer_id/
+Put /api/v1/customers/:customer_id/
 ```
 
 <details close>
@@ -316,7 +329,7 @@ Response:
 <br>
 
 ```
-Delete /customer/:customer_id/
+Delete /api/v1/customer/:customer_id/
 ```
 
 <details close>
@@ -334,8 +347,8 @@ ___
 ### Vendors
 
 ```
-Get /vendors/  (for all vendors)
-Get /vendors/:vendor_id/ (for single vendor)
+Get /api/v1/vendors/  (for all vendors)
+Get /api/v1/vendors/:vendor_id/ (for single vendor)
 ```
 
 <details close>
@@ -381,7 +394,7 @@ Response:
 <br>
 
 ```
-Post /vendors/
+Post /api/v1/vendors/
 ```
 
 <details close>
@@ -423,7 +436,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id/
+Put /api/v1/vendors/:vendor_id/
 ```
 
 <details close>
@@ -466,7 +479,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id/
+Delete /api/v1/vendors/:vendor_id/
 ```
 
 <details close>
@@ -479,10 +492,12 @@ Delete /vendors/:vendor_id/
 
 </details>
 
+___
+
 ### Items
 
 ```
-Get /vendors/:vendor_id/items/
+Get /api/v1/vendors/:vendor_id/items/
 ```
 
 <details close>
@@ -523,7 +538,7 @@ Response:
 <br>
 
 ```
-Post /vendors/:vendor_id/items/
+Post /api/v1/vendors/:vendor_id/items/
 ```
 
 <details close>
@@ -571,7 +586,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id/items/:item_id/
+Put /api/v1/vendors/:vendor_id/items/:item_id/
 ```
 
 <details close>
@@ -618,7 +633,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id/items/:item_id/
+Delete /api/v1/vendors/:vendor_id/items/:item_id/
 ```
 
 <details close>
@@ -631,11 +646,13 @@ Delete /vendors/:vendor_id/items/:item_id/
 
 </details>
 
+___
+
 ### PreOrders 
 ### (customer)
 
 ```
-Get /customers/:customer_id/preorders/
+Get /api/v1/customers/:customer_id/preorders/
 ```
 
 <details close>
@@ -675,7 +692,7 @@ Response:
 <br>
 
 ```
-Post /customers/:customer_id/preorders/
+Post /api/v1/customers/:customer_id/preorders/
 ```
 
 <details close>
@@ -716,7 +733,7 @@ Response:
 <br>
 
 ```
-Put /customers/:customer_id/preorders/:preorder_id/
+Put /api/v1/customers/:customer_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -757,7 +774,7 @@ Response:
 <br>
 
 ```
-Delete /customers/:customer_id/preorders/:preorder_id/
+Delete /api/v1/customers/:customer_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -773,7 +790,7 @@ Delete /customers/:customer_id/preorders/:preorder_id/
 ### (Vendor)
 
 ```
-Get /vendors/:vendor_id/preorders/
+Get /api/v1/vendors/:vendor_id/preorders/
 ```
 
 <details close>
@@ -813,7 +830,7 @@ Response:
 <br>
 
 ```
-Post /vendors/:vendor_id/preorders/:preorder_id/
+Post /api/v1/vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -859,7 +876,7 @@ Response:
 <br>
 
 ```
-Put /vendors/:vendor_id/preorders/:preorder_id/
+Put /api/v1/vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -903,7 +920,7 @@ Response:
 <br>
 
 ```
-Delete /vendors/:vendor_id/preorders/:preorder_id/
+Delete /api/v1/vendors/:vendor_id/preorders/:preorder_id/
 ```
 
 <details close>
@@ -916,10 +933,12 @@ Delete /vendors/:vendor_id/preorders/:preorder_id/
 
 </details>
 
+___
+
 ### Weather
 
 ```
-Get /weather/
+Get /api/v1/weather/
 ```
 
 <details close>
@@ -949,7 +968,1120 @@ Response:
 </details>
 <br>
 
-### Team
+</details>
+
+---
+
+## V2
+<details close>
+
+### Markets
+```
+Get /api/v2/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 1,
+        "market_name": "Denver Saturday Market",
+        "location": "Denver, CO",
+        "details": "All the vendors!!",
+        "start_date": "2023-12-06",
+        "end_date": "2023-12-06",
+        "date_created": "2023-12-06T18:02:28.458557Z",
+        "updated_at": "2023-12-06T18:02:28.458571Z"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+        "id": 1,
+        "market_name": "Denver Saturday Market",
+        "location": "Denver, CO",
+        "details": "All the vendors!!",
+        "start_date": "2023-12-06",
+        "end_date": "2023-12-06",
+        "date_created": "2023-12-06T18:02:28.458557Z",
+        "updated_at": "2023-12-06T18:02:28.458571Z"
+    }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "id": 1,
+    "market_name": "Denver Saturday Market",
+    "location": "Denver, CO",
+    "details": "All the vendors!!",
+    "start_date": "2023-12-06",
+    "end_date": "2023-12-06",
+    "date_created": "2023-12-06T18:02:28.458557Z",
+    "updated_at": "2023-12-06T18:02:28.458571Z"
+}
+```
+
+</details>
+
+
+#### Markets (External API)
+```
+Get /api/v2/markets/location/:zipcode/:radius/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+/api/v2/markets/location/78750/5/
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "market_name": "Texas Farmers' Market at Lakeline",
+        "address": "Lakeline Mall parking lot, behind Sears & Dillard's, Cedar Park, Texas 78613",
+        "lat": "-97.806683",
+        "lon": "30.469036",
+        "website": "www.TexasFarmersMarket.org",
+        "zipcode": "78613",
+        "phone": "5129537959"
+    },
+    {
+        "market_name": "AUSTIN FARMERS MARKET",
+        "address": "9607 RESEARCH BLVD, AUSTIN, Texas 78759",
+        "lat": "-97.741448",
+        "lon": "30.387094",
+        "website": "www.farmergeorge.market",
+        "zipcode": "78759",
+        "phone": "9562867775"
+    }
+]
+```
+
+</details>
+<br>
+
+---
+
+### Customers
+
+```
+Get /api/v2/customers/  (for all customers)
+Get /api/v2/customers/:customer_id/ (for single customer)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 3,
+        "first_name": "Market",
+        "last_name": "Next Door",
+        "phone": "4565421346",
+        "email": "Market@gmail.com",
+        "location": "location"
+    },
+    {
+        "id": 4,
+        "first_name": "Is the",
+        "last_name": "Best!",
+        "phone": "4565421346",
+        "email": "NextDoor@gmail.com",
+        "location": "location"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/customers/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+        "id": 1,
+        "market_name": "Denver Saturday Market",
+        "location": "Denver, CO",
+        "details": "All the vendors!!",
+        "start_date": "2023-12-06",
+        "end_date": "2023-12-06",
+        "date_created": "2023-12-06T18:02:28.458557Z",
+        "updated_at": "2023-12-06T18:02:28.458571Z"
+    }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "id": 5,
+    "first_name": "Market",
+    "last_name": "NextDoor",
+    "phone": "4565421346",
+    "email": "george@gmail.com",
+    "password": "134134",
+    "location": "location"
+}
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/customers/:customer_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+    "id": 5,
+    "first_name": "Market",
+    "last_name": "UPDATE",
+    "phone": "4565421346",
+    "email": "george@gmail.com",
+    "location": "UPDATE"
+     }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+{
+    "id": 5,
+    "first_name": "Market",
+    "last_name": "UPDATE",
+    "phone": "4565421346",
+    "email": "george@gmail.com",
+    "location": "UPDATE"
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/customer/:customer_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+___
+
+### Vendors
+
+```
+Get /api/v2/vendors/  (for all vendors)
+Get /api/v2/vendors/:vendor_id/ (for single vendor)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 1,
+        "market": 1,
+        "vendor_name": "Potato Vendor",
+        "first_name": "Joseph's",
+        "last_name": "Potatoes",
+        "email": "jp@gmail.com",
+        "location": "Cental Ln"
+    },
+    {
+        "id": 2,
+        "market": 1,
+        "vendor_name": "Another Potato Vendor",
+        "first_name": "Terry's",
+        "last_name": "Potatoes",
+        "email": "jp@gmail.com",
+        "location": "Cental Ln"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/vendors/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+    "market": null,
+    "vendor_name": "Saturday Market",
+    "first_name": "George",
+    "last_name": "Picket",
+    "email": "gpicket@gmail.com",
+    "location": null
+     }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "id": 2,
+    "market": null,
+    "vendor_name": "Saturday Market",
+    "first_name": "George",
+    "last_name": "Picket",
+    "email": "gpicket@gmail.com",
+    "location": null
+}
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/vendors/:vendor_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+    "id": 2,
+    "market": 1,
+    "vendor_name": "Saturday Market",
+    "first_name": "George",
+    "last_name": "Picket",
+    "email": "gpicket@gmail.com",
+    "location": "location_info"
+     }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+{
+    "id": 2,
+    "market": 1,
+    "vendor_name": "Saturday Market",
+    "first_name": "George",
+    "last_name": "Picket",
+    "email": "gpicket@gmail.com",
+    "location": "location_info"
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/vendors/:vendor_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+---
+
+### Customers by Market
+```
+Get /api/v2/markets/:market_id/customers/  (for all customers at that market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+[
+    {
+        "id": 3,
+        "first_name": "Market",
+        "last_name": "Next Door",
+        "phone": "4565421346",
+        "email": "Market@gmail.com",
+        "location": "location"
+    },
+    {
+        "id": 4,
+        "first_name": "Is the",
+        "last_name": "Best!",
+        "phone": "4565421346",
+        "email": "NextDoor@gmail.com",
+        "location": "location"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Get /api/v2/markets/:market_id/customers/:customer_id/ (for a single customer at that market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 3,
+    "first_name": "Market",
+    "last_name": "Next Door",
+    "phone": "4565421346",
+    "email": "Market@gmail.com",
+    "location": "location"
+}
+```
+
+</details>
+<br>
+
+---
+
+### Vendors by Market
+
+```
+Get /api/v2/markets/:market_id/vendors/  (for all vendors at that market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 1,
+        "market": 1,
+        "vendor_name": "Potato Vendor",
+        "first_name": "Joseph's",
+        "last_name": "Potatoes",
+        "email": "jp@gmail.com",
+        "location": "Cental Ln"
+    },
+    {
+        "id": 2,
+        "market": 1,
+        "vendor_name": "Another Potato Vendor",
+        "first_name": "Terry's",
+        "last_name": "Potatoes",
+        "email": "jp@gmail.com",
+        "location": "Cental Ln"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Get /api/v2/markets/:market_id/vendors/:vendor_id/ (for a single vendor at that market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 1,
+    "market": 1,
+    "vendor_name": "Potato Vendor",
+    "first_name": "Joseph's",
+    "last_name": "Potatoes",
+    "email": "jp@gmail.com",
+    "location": "Cental Ln"
+}
+```
+
+</details>
+<br>
+
+
+---
+
+### Items
+
+```
+Get /api/v2/vendors/:vendor_id/items/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 3,
+        "item_name": "Red Potatoes",
+        "vendor": 1,
+        "price": "3.00",
+        "size": "2 lb",
+        "quantity": 6,
+        "availability": false,
+        "description": "Red Potatoes!",
+        "image": null,
+        "date_created": "2023-12-06T18:08:57.592411Z",
+        "updated_at": "2023-12-07T04:02:29.086898Z"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/vendors/:vendor_id/items/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+        "item_name": "garlic",
+        "vendor": 1,
+        "price": "1.99",
+        "size": "each",
+        "quantity": 250,
+        "availability": true,
+        "description": "GARLIC",
+        "image": null,
+    }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+        "id": 6,
+        "item_name": "garlic",
+        "vendor": 1,
+        "price": "1.99",
+        "size": "each",
+        "quantity": 250,
+        "availability": true,
+        "description": "GARLIC",
+        "image": null,
+        "date_created": "2023-12-07T21:44:17.012677Z",
+        "updated_at": "2023-12-07T21:44:17.012693Z"
+    }
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/vendors/:vendor_id/items/:item_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+        "id": 6,
+        "item_name": "garlic",
+        "vendor": 1,
+        "price": "1.99",
+        "size": "each",
+        "quantity": 250,
+        "availability": true,
+        "description": "Not GARLIC",
+        "image": null,
+    }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+{
+        "id": 6,
+        "item_name": "garlic",
+        "vendor": 1,
+        "price": "1.99",
+        "size": "each",
+        "quantity": 250,
+        "availability": true,
+        "description": "Not GARLIC",
+        "image": null,
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/vendors/:vendor_id/items/:item_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+---
+
+### Customer Preorders
+
+```
+Get /api/v2/markets/:market_id/customers/:customer_id/preorders/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 1,
+        "customer": 1,
+        "item": 1,
+        "packed": false,
+        "fulfilled": false,
+        "ready": true,
+        "quantity_requested": 5,
+        "vendor_id": 1,
+        "date_created": "2023-12-06T18:05:43.715193Z",
+        "updated_at": "2023-12-07T16:36:37.206279Z"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/markets/:market_id/customers/:customer_id/preorders/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+     {
+        "item": 1,
+        "quantity_requested": 5,
+    }
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+        "id": 1,
+        "customer": 1,
+        "item": 1,
+        "packed": false,
+        "fulfilled": false,
+        "ready": true,
+        "quantity_requested": 5,
+        "vendor_id": 1,
+        "date_created": "2023-12-06T18:05:43.715193Z",
+        "updated_at": "2023-12-07T16:36:37.206279Z"
+}
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/markets/:market_id/customers/:customer_id/preorders/:preorder_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "item": 1,
+    "quantity_requested": 6,
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+{
+    "id": 1,
+    "customer": 1,
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 6,
+    "vendor_id": 1,
+    "date_created": "2023-12-06T18:05:43.715193Z",
+    "updated_at": "2023-12-07T16:36:37.206279Z"
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/markets/:market_id/customers/:customer_id/preorders/:preorder_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+### Vendor Preorders
+
+```
+Get /api/v2/markets/:market_id/vendors/:vendor_id/preorders/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+[
+    {
+        "id": 5,
+        "customer": 1,
+        "item": 1,
+        "packed": false,
+        "fulfilled": false,
+        "ready": true,
+        "quantity_requested": 12,
+        "vendor_id": 1,
+        "date_created": "2023-12-07T04:11:14.470164Z",
+        "updated_at": "2023-12-07T04:11:14.470176Z"
+    },
+    {
+        "id": 6,
+        "customer": 20,
+        "item": 1,
+        "packed": false,
+        "fulfilled": false,
+        "ready": true,
+        "quantity_requested": 2,
+        "vendor_id": 1,
+        "date_created": "2023-12-07T04:11:14.470164Z",
+        "updated_at": "2023-12-07T04:11:14.470176Z"
+    }
+]
+```
+
+</details>
+<br>
+
+```
+Get /api/v2/markets/:market_id/vendors/:vendor_id/preorders/:preorder_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 5,
+    "customer": 1,
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 12,
+    "vendor_id": 1,
+    "date_created": "2023-12-07T04:11:14.470164Z",
+    "updated_at": "2023-12-07T04:11:14.470176Z"
+}
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/markets/:market_id/vendors/:vendor_id/preorders/:preorder_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "id": 5,
+    "customer": 1,
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 12,
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "id": 5,
+    "customer": 1,
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 12,
+    "vendor_id": 1,
+    "date_created": "2023-12-07T04:11:14.470164Z",
+    "updated_at": "2023-12-07T04:11:14.470176Z"
+}
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/markets/:market_id/vendors/:vendor_id/preorders/:preorder_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 12,
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+{
+    "id": 5,
+    "customer": 1,
+    "item": 1,
+    "packed": false,
+    "fulfilled": false,
+    "ready": true,
+    "quantity_requested": 12,
+    "vendor_id": 1,
+    "date_created": "2023-12-07T04:11:14.470164Z",
+    "updated_at": "2023-12-07T04:11:14.470176Z"
+}
+```
+
+</details>
+
+---
+
+### Weather
+
+```
+Get /api/v2/weather/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+Parameters: zipcode
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+
+    {
+        "description": "overcast clouds",
+        "temp": 35,
+        "icon": "04d"
+    }
+```
+
+</details>
+<br>
+
+</details>
+
+---
+
+## Team
 
 <table>
   <tr>
