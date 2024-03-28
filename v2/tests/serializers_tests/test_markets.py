@@ -1,8 +1,8 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from ...models import Market
-from ...serializers import MarketSerializer
+from v2.models import Market
+from v2.serializers import MarketSerializer
 from datetime import date
 
 class MarketSerializerTests(APITestCase):

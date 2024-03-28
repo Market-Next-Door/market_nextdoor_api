@@ -2,7 +2,7 @@ from rest_framework.test import APITestCase
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
-from ...serializers import *
+from v2.serializers import *
 import pdb
 
 class CustomerSerializerTest(TestCase):

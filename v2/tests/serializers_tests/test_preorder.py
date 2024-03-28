@@ -1,6 +1,7 @@
 from django.test import TestCase
-from market_nextdoor_api.models import Preorder, Vendor, Item, Customer, Market
-from market_nextdoor_api.serializers import PreorderSerializer
+from v2.models import Preorder, Vendor, Item, Customer, Market, VendorMarket, CustomerMarket
+from v2.serializers import PreorderSerializer
+import pdb
 
 class PreorderSerializerTest(TestCase):
   def setUp(self):
@@ -17,7 +18,6 @@ class PreorderSerializerTest(TestCase):
     self.market = Market.objects.create(**self.market_data)
 
     self.vendor_data = {
-      'market': self.market,
       'vendor_name': 'TestVendor',
       'first_name': 'John',
       'last_name': 'Doe',
@@ -30,6 +30,8 @@ class PreorderSerializerTest(TestCase):
     }
 
     self.vendor = Vendor.objects.create(**self.vendor_data)
+
+    self.vendor_market = VendorMarket.objects.create(vendor=self.vendor, market=self.market)
 
     self.item_data = {
       'item_name': 'Test Item',
@@ -58,6 +60,8 @@ class PreorderSerializerTest(TestCase):
     }
 
     self.customer = Customer.objects.create(**self.customer_data)
+
+    self.customer_market = CustomerMarket.objects.create(customer=self.customer, market=self.market)
 
     self.preorder_data = {
       'customer': self.customer,
