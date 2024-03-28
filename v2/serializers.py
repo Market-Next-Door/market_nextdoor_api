@@ -28,32 +28,13 @@ class MarketSerializer(serializers.ModelSerializer):
     fields = ['id', 'market_name', 'location', 'details', 'start_date', 'end_date', 'date_created', 'updated_at']
 
 # Preorders
-# class PreorderSerializer(serializers.ModelSerializer):
-#   vendor_id = serializers.SerializerMethodField()
-
-#   class Meta:
-#     model = Preorder
-#     fields = ['id', 'customer', 'item', 'packed', 'fulfilled', 'ready', 'quantity_requested', 'vendor_id', 'date_created', 'updated_at', ]
-
-#   def get_vendor_id(self, obj):
-#     return obj.item.vendor_id 
-  
-
-# ManytoMany Test Serializer
-class PreorderItemSerializer(serializers.ModelSerializer):
-  item_id = serializers.ReadOnlyField(source='item.id')
-  item_name = serializers.ReadOnlyField(source='item.item_name')
-  vendor_id = serializers.ReadOnlyField(source='item.vendor.id')
-  
-  class Meta:
-    model = PreorderItem
-    fields = ['item_id', 'item_name', 'vendor_id', 'quantity_requested']
-
-
 class PreorderSerializer(serializers.ModelSerializer):
-  items = PreorderItemSerializer(many=True, read_only=True, source='preorderitem_set')
+  vendor_id = serializers.SerializerMethodField()
 
   class Meta:
     model = Preorder
-    fields = ['id','customer', 'ready', 'packed', 'fulfilled', 'items']
+    fields = ['id', 'customer', 'item', 'quantity_requested', 'packed', 'fulfilled', 'ready', 'vendor_id', 'date_created', 'updated_at', ]
 
+  def get_vendor_id(self, obj):
+    return obj.item.vendor_id 
+  
