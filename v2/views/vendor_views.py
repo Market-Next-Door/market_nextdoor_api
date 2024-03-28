@@ -60,6 +60,7 @@ def delete_vendor(vendor):
 
 
 # Vendor by Market
+# This endpoint and it's compliment need to have POST and DEL functionality, to create and destroy associations between the market and vendor (VendorMarket objects) and the same needs to happen for CustomerMarket objects. 
 @api_view(['GET'])
 def vendors_by_market_list(request, market_id):
   # Input validation
