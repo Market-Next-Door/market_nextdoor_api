@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import CustomerSerializer, PreorderSerializer
-from ..models import Customer, Market, Preorder, PreorderItem, Item
+from ..models import Customer, Market, Preorder
 import pdb
 
 
@@ -124,29 +124,14 @@ def get_preorder_list(request, customer):
   serializer = PreorderSerializer(preorders, many=True)
   return Response(serializer.data)
 
+# Potential bug here where Customer's can make preorders for items (and by extension vendors) that are not available at the customer's chosen market
 def create_preorder(request, customer):
   serializer = PreorderSerializer(data=request.data)
   if serializer.is_valid():
-    preorder = serializer.save(customer=customer)
-    response = preorder_item_helper(request, preorder, serializer)
-    return response
+    serializer.save(customer=customer)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
   else:
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-  
-def preorder_item_helper(request, preorder, serializer):
-  items = request.data.get('items', [])
-  for item_data in items:
-    try:
-      item = Item.objects.get(pk=item_data["item"])
-    except Item.DoesNotExist:
-      return Response({"error":f'Item {item_data["item"]} does not exist'}, status=status.HTTP_404_NOT_FOUND)
-      
-    PreorderItem.objects.create(
-      preorder=preorder,
-      item_id=item.id,
-      quantity_requested=item_data['quantity']
-      )
-  return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def preorder_by_customer_details(request, market_id, customer_id, preorder_id):
