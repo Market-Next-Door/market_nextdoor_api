@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from ...models import *
+from v2.models import *
 import pdb
 
 class CustomerTestCase(APITestCase):
@@ -20,7 +20,7 @@ class CustomerTestCase(APITestCase):
     ) 
 
   def test_customer_list(self):
-    url =  reverse('customer_list')
+    url = reverse('full_customer_list_v2')
     response = self.client.get(url)
 
     self.assertEqual(response.status_code,status.HTTP_200_OK )
@@ -36,7 +36,7 @@ class CustomerTestCase(APITestCase):
 
   def test_post_customer(self):
 
-    url =  reverse('customer_list')
+    url =  reverse('full_customer_list_v2')
     data = {
       "first_name": "John",
       "last_name": "Harry",
@@ -55,7 +55,7 @@ class CustomerTestCase(APITestCase):
     self.assertEqual(response.data["location"], None)
 
   def test_customer_details(self):
-    url =  reverse('customer_details', args=[self.customer1.pk])
+    url =  reverse('full_customer_details_v2', args=[self.customer1.pk])
     response = self.client.get(url)
 
     self.assertEqual(Customer.objects.count(), 2)
@@ -68,7 +68,7 @@ class CustomerTestCase(APITestCase):
 
   def test_update_customer_details(self):
     customer_id = 1
-    url =  reverse('customer_details', args=[customer_id])
+    url =  reverse('full_customer_details_v2', args=[customer_id])
     data = {
       "email": "UPDATE"
     }
@@ -85,7 +85,7 @@ class CustomerTestCase(APITestCase):
 
   def test_delete_customer(self):
     customer_id = 1
-    url =  reverse('customer_details', args=[customer_id])
+    url =  reverse('full_customer_details_v2', args=[customer_id])
 
     response = self.client.delete(url)
     self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )

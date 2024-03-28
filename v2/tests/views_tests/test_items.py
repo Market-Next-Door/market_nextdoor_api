@@ -1,15 +1,11 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from ...models import *
+from v2.models import *
 import pdb
 
 class ItemTestCase(APITestCase):
   def setUp(self):
-    self.market = Market.objects.create(
-      market_name="Saturday Market",
-      location="Denver, TX"
-    )
     self.vendor1 = Vendor.objects.create(
       vendor_name="Tom's Toms!",
       first_name="Thomas",
@@ -38,7 +34,7 @@ class ItemTestCase(APITestCase):
 
 # GET (index) request Test
   def test_item_list(self):
-    url = reverse('item_list', args=[self.vendor1.pk])
+    url = reverse('item_list_v2', args=[self.vendor1.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code,status.HTTP_200_OK)
     self.assertEqual(response.data[0]["id"], self.item1.id)
@@ -53,7 +49,7 @@ class ItemTestCase(APITestCase):
 
 # POST request test
   def test_post_item(self):
-    url = reverse('item_list', args=[self.vendor1.pk])
+    url = reverse('item_list_v2', args=[self.vendor1.pk])
     data = {
       'item_name': "Tomato", 
       'vendor': 1, 
@@ -77,7 +73,7 @@ class ItemTestCase(APITestCase):
 
 # GET (show) request test
   def test_item_details(self):
-    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    url =  reverse('item_details_v2', args=[self.vendor1.pk, self.item1.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code,status.HTTP_200_OK )
     self.assertEqual(response.data["id"], self.item1.id)
@@ -90,7 +86,7 @@ class ItemTestCase(APITestCase):
 
 # PUT request test
   def test_update_item(self):
-    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    url =  reverse('item_details_v2', args=[self.vendor1.pk, self.item1.pk])
     data = {
       'item_name': "Tomato", 
       'vendor': 1, 
@@ -114,7 +110,7 @@ class ItemTestCase(APITestCase):
 # DELETE request test
   def test_delete_item(self):
     self.assertEqual(Item.objects.count(), 2)
-    url =  reverse('item_details', args=[self.vendor1.pk, self.item1.pk])
+    url =  reverse('item_details_v2', args=[self.vendor1.pk, self.item1.pk])
     response = self.client.delete(url)
     self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
     self.assertEqual(Item.objects.count(), 1)
