@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ...models import Market
+from v2.models import Market
 from datetime import date
 
 class MarketModelTests(TestCase):

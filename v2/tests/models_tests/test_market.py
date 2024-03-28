@@ -1,5 +1,5 @@
 from django.test import TestCase
-from market_nextdoor_api.models import Market
+from v2.models import Market
 
 class MarketModelTest(TestCase):
   def setUp(self):
