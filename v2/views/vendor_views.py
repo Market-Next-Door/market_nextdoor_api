@@ -115,7 +115,7 @@ def preorder_by_vendor_list(request, market_id, vendor_id):
   except Vendor.DoesNotExist:
     return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
 
-  preorders = Preorder.objects.filter(items__vendor=vendor)
+  preorders = Preorder.objects.filter(item__vendor=vendor)
   serializer = PreorderSerializer(preorders, many=True)
   return Response(serializer.data)
 
@@ -136,7 +136,7 @@ def preorder_by_vendor_details(request, market_id, vendor_id, preorder_id):
   except Vendor.DoesNotExist:
     return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
   try:
-    preorder = Preorder.objects.get(pk=preorder_id, items__vendor=vendor)
+    preorder = Preorder.objects.get(pk=preorder_id, item__vendor=vendor)
   except Preorder.DoesNotExist:
     return Response(status=status.HTTP_404_NOT_FOUND)
   
@@ -147,7 +147,7 @@ def preorder_by_vendor_details(request, market_id, vendor_id, preorder_id):
   
 def get_preorder_vendor_list_details(preorder):
   serializer = PreorderSerializer(preorder)
-  return Response(serializer.data)
+  return Response(serializer.data, status=status.HTTP_200_OK)
 
 def update_preorder(preorder, data):
   preorder_data = PreorderSerializer(preorder, data=data, partial=True)
