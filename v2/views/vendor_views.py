@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import VendorSerializer, PreorderSerializer
-from ..models import Vendor, Preorder, Market, Item
+from ..models import Vendor, Preorder, Market, VendorMarket
 import pdb
 
 
@@ -61,22 +61,48 @@ def delete_vendor(vendor):
 
 # Vendor by Market
 # This endpoint and it's compliment need to have POST and DEL functionality, to create and destroy associations between the market and vendor (VendorMarket objects) and the same needs to happen for CustomerMarket objects. 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def vendors_by_market_list(request, market_id):
   # Input validation
   if not (isinstance(market_id, int) and market_id > 0):
     return Response({"error": "Invalid market id."}, status=status.HTTP_400_BAD_REQUEST)
-
-  try:
-    market = Market.objects.get(pk=market_id)
-  except Market.DoesNotExist:
-    return Response(stats=status.HTTP_404_NOT_FOUND)
   
+  market = get_market_object(market_id)
+
+  if request.method == 'GET':
+    return get_vendors_by_market_list(request, market)
+  elif request.method == 'POST':
+    return create_vendor_market(request, market)
+
+def get_market_object(market_id):
+  try:
+    return Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
+
+def get_vendors_by_market_list(request, market):
   vendors = market.vendors.all()
   serializer = VendorSerializer(vendors, many=True)
   return Response(serializer.data)
 
-@api_view(['GET'])
+def create_vendor_market(request, market):
+  vendor_id = request.data["id"]
+  if (isinstance(vendor_id, int) and vendor_id > 0):
+
+    try:
+      vendor = Vendor.objects.get(pk=vendor_id)
+    except Vendor.DoesNotExist:
+      return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if VendorMarket.objects.filter(vendor=vendor, market=market).exists():
+      return Response({"error": "Vendor is already associated with the market."}, status=status.HTTP_400_BAD_REQUEST)
+
+    VendorMarket.objects.create(vendor=vendor, market=market)
+
+    return Response({"message": "Vendor was associated successfully."}, status=status.HTTP_201_CREATED)
+  return Response({"error": "Vendor ID is invalid."}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'DELETE'])
 def vendor_by_market_details(request, vendor_id, market_id):
   # Input validation
   if not (isinstance(market_id, int) and market_id > 0):
@@ -84,18 +110,35 @@ def vendor_by_market_details(request, vendor_id, market_id):
   if not (isinstance(vendor_id, int) and vendor_id > 0):
     return Response({"error": "Invalid vendor id."}, status=status.HTTP_400_BAD_REQUEST)
 
+  market = get_market_object(market_id)
+  vendor = get_vendor_object(vendor_id)
+
+  if request.method == 'GET':
+    return get_vendor_by_market_details(vendor)
+  elif request.method == 'DELETE':
+    return delete_vendor_market(market, vendor)
+
+def get_market_object(market_id):
   try:
-    market = Market.objects.get(pk=market_id)
+    return Market.objects.get(pk=market_id)
   except Market.DoesNotExist:
     return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
-  
-  try:
-    vendor = market.vendors.get(pk=vendor_id)
-  except Vendor.DoesNotExist:
-    return Response({"error": "Vendor not found."}, status=status.HTTP_404_NOT_FOUND)
 
+def get_vendor_object(vendor_id):
+  try:
+    return Vendor.objects.get(pk=vendor_id)
+  except Vendor.DoesNotExist:
+    return Response({"error": "vendor not found."}, status=status.HTTP_404_NOT_FOUND)
+
+def get_vendor_by_market_details(vendor):
   serializer = VendorSerializer(vendor)
   return Response(serializer.data)
+
+def delete_vendor_market(market, vendor):
+  # pdb.set_trace()
+  vendor_market = VendorMarket.objects.filter(vendor=vendor, market=market)
+  vendor_market.delete()
+  return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Vendor Preorders
