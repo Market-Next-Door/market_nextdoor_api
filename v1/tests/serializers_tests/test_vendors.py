@@ -1,6 +1,6 @@
 from django.test import TestCase
-from market_nextdoor_api.models import Vendor, Market
-from market_nextdoor_api.serializers import VendorSerializer
+from v1.models import Vendor, Market
+from v1.serializers import VendorSerializer
 
 class VendorSerializerTest(TestCase):
   def setUp(self):

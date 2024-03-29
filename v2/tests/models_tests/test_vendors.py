@@ -1,13 +1,12 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from market_nextdoor_api.models import Vendor, Market
+from v2.models import Vendor, Market
 
 class VendorModelTest(TestCase):
   def setUp(self):
     self.market = Market.objects.create(market_name="Test Market")
 
     self.vendor_data = {
-        'market': self.market,
         'vendor_name': 'TestVendor',
         'first_name': 'John',
         'last_name': 'Doe',
@@ -30,7 +29,6 @@ class VendorModelTest(TestCase):
     """Test individual fields of the Vendor model."""
     vendor = Vendor.objects.get(id=self.vendor.id)
 
-    self.assertEqual(vendor.market, self.market)
     self.assertEqual(vendor.vendor_name, self.vendor_data['vendor_name'])
     self.assertEqual(vendor.first_name, self.vendor_data['first_name'])
     self.assertEqual(vendor.last_name, self.vendor_data['last_name'])
@@ -43,7 +41,6 @@ class VendorModelTest(TestCase):
     """Test that market is required (null=False)."""
     try:
       Vendor.objects.create(
-        market=None,
         vendor_name=self.vendor_data['vendor_name'],
         first_name=self.vendor_data['first_name'],
         last_name=self.vendor_data['last_name'],

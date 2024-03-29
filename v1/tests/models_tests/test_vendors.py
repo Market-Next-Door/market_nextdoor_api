@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from market_nextdoor_api.models import Vendor, Market
+from v1.models import Vendor, Market
 
 class VendorModelTest(TestCase):
   def setUp(self):

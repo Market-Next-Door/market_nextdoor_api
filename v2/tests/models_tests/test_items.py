@@ -2,7 +2,7 @@ import os
 from decimal import Decimal
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from market_nextdoor_api.models import Vendor, Item
+from v2.models import Vendor, Item
 
 class ItemModelTest(TestCase):
   def setUp(self):

@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from ...models import *
+from v2.models import *
 import pdb
 
 class MarketTestCase(APITestCase):
@@ -16,7 +16,7 @@ class MarketTestCase(APITestCase):
 
 # GET (index) request test
   def test_market_list(self):
-    url = reverse('market_list')
+    url = reverse('market_list_v2')
     response = self.client.get(url)
     self.assertEqual(response.status_code,status.HTTP_200_OK)
     self.assertEqual(response.data[0]["id"], self.market1.id)
@@ -28,7 +28,7 @@ class MarketTestCase(APITestCase):
 
 # POST request test
   def test_post_market(self):
-    url = reverse('market_list')
+    url = reverse('market_list_v2')
     data = {
       'market_name': "Sunday Market", 
       'location': "Austin, TX", 
@@ -49,7 +49,7 @@ class MarketTestCase(APITestCase):
 
 # GET (show) request test
   def test_market_details(self):
-    url = reverse('market_details', args=[self.market1.pk])
+    url = reverse('market_details_v2', args=[self.market1.pk])
     response = self.client.get(url)
     self.assertEqual(response.status_code,status.HTTP_200_OK)
     self.assertEqual(response.data["id"], self.market1.id)
@@ -61,7 +61,7 @@ class MarketTestCase(APITestCase):
 
 # PUT request test
   def test_update_market(self):
-    url = reverse('market_details', args=[self.market1.pk])
+    url = reverse('market_details_v2', args=[self.market1.pk])
     data = {
       'market_name': "Sunday Market", 
       'location': "Austin, TX", 
@@ -81,7 +81,7 @@ class MarketTestCase(APITestCase):
 # DELETE request test
   def test_delete_market(self):
     self.assertEqual(Market.objects.count(), 1)
-    url = reverse('market_details', args=[self.market1.pk])
+    url = reverse('market_details_v2', args=[self.market1.pk])
     response = self.client.delete(url)
     self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
     self.assertEqual(Market.objects.count(), 0)

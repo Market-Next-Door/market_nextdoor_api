@@ -31,7 +31,7 @@ class Item(models.Model):
         super().delete()
 
     def __str__(self):
-        return self.item_name
+        return f"{self.item_name} from {self.vendor.vendor_name}"
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -48,26 +48,21 @@ class Customer(models.Model):
     
 class Preorder(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False)
-    items = models.ManyToManyField(Item, through='PreorderItem')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=False)
+    quantity_requested = models.IntegerField(default=1, null=False)
     ready = models.BooleanField(default=False)
     packed = models.BooleanField(default=False)
     fulfilled = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class PreorderItem(models.Model):
-    preorder = models.ForeignKey(Preorder, on_delete=models.CASCADE, null=False)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, null=False)
-    quantity_requested = models.IntegerField(default=1)
-    date_created = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
     def __str__(self):
-        return f"{self.quantity_requested} of {self.item.item_name} in {self.preorder}"
-    
+        return f"{self.quantity_requested} of {self.item.item_name} for {self.customer.first_name}"
+
 class Market(models.Model):
     market_name = models.CharField(max_length=50)
     location = models.CharField(max_length =100)
+    # listing_id = models.CharField(max_length=50) # This will need to be added to the database for when we get the map component plugged in. 
     details = models.CharField(max_length=100)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)

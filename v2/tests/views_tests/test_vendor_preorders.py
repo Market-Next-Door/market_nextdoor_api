@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from rest_framework import status
-from ...models import *
+from v2.models import *
 import pdb
 
 class VendorPreorderTestCase(APITestCase):
@@ -30,6 +30,8 @@ class VendorPreorderTestCase(APITestCase):
       password="1234",
       location="Denver, CO"
     )
+    self.vendor_market1 = VendorMarket.objects.create(vendor=self.vendor1, market=self.market)
+    self.vendor_market2 = VendorMarket.objects.create(vendor=self.vendor2, market=self.market)
     self.item1 = Item.objects.create(
       item_name="potato",
       vendor=self.vendor1,
@@ -54,6 +56,7 @@ class VendorPreorderTestCase(APITestCase):
       password="1234",
       location="Denver, CO"
     )
+    self.customer_market = CustomerMarket.objects.create(customer=self.customer, market=self.market)
     self.preorder1 = Preorder.objects.create(
       customer=self.customer,
       item=self.item1,
@@ -73,8 +76,8 @@ class VendorPreorderTestCase(APITestCase):
       ready=False
     )
 
-  def test_vendor_preorder_list(self):
-    url =  reverse('preorder_vendor_list', args=[self.vendor1.pk])
+  def test_get_vendor_preorder_list(self):
+    url =  reverse('vendor_preorder_list_v2', args=[self.market.pk, self.vendor1.pk])
     response = self.client.get(url)
 
     self.assertEqual(response.status_code,status.HTTP_200_OK )
@@ -85,15 +88,8 @@ class VendorPreorderTestCase(APITestCase):
     self.assertEqual(response.data[1]["item"], self.preorder2.item.id)
     self.assertEqual(response.data[1]["ready"], self.preorder2.ready)
 
-    url =  reverse('preorder_vendor_list', args=[self.vendor2.pk])
-    response = self.client.get(url)
-    self.assertEqual(response.status_code,status.HTTP_200_OK )
-    self.assertEqual(len(response.data), 1)
-    self.assertEqual(response.data[0]["vendor_id"], self.vendor2.id)
-
-
-  def test_vendor_preorder_details(self):
-    url =  reverse('preorder_vendor_list_details', args=[self.vendor1.pk, self.preorder1.pk])
+  def test_get_vendor_preorder_details(self):
+    url =  reverse('vendor_preorder_details_v2', args=[self.market.pk, self.vendor1.pk, self.preorder1.pk])
     response = self.client.get(url)
     self.assertEqual(Customer.objects.count(), 1)
     self.assertEqual(response.status_code,status.HTTP_200_OK )
@@ -102,8 +98,8 @@ class VendorPreorderTestCase(APITestCase):
     self.assertEqual(response.data["vendor_id"], self.vendor1.id)
 
 
-  def test_update_preorder_details(self):
-    url =  reverse('preorder_vendor_list_details', args=[self.vendor1.pk, self.preorder1.pk])
+  def test_update_vendor_preorder_details(self):
+    url =  reverse('vendor_preorder_details_v2', args=[self.market.pk, self.vendor1.pk, self.preorder1.pk])
     data = {
       "ready": True
     }

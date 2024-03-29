@@ -1,5 +1,5 @@
 from django.test import TestCase
-from market_nextdoor_api.models import Preorder, Customer, Item, Vendor
+from v2.models import Preorder, Customer, Item, Vendor
 
 class PreorderModelTest(TestCase):
   def setUp(self):
