@@ -1451,6 +1451,37 @@ Response:
 <br>
 
 ```
+Post /api/v2/markets/:market_id/customers/    (Create an association between a customer and a market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "id": 2
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "message": "Customer association created successfully."
+}
+```
+
+</details>
+<br>
+
+```
 Get /api/v2/markets/:market_id/customers/:customer_id/ (for a single customer at that market)
 ```
 
@@ -1482,6 +1513,20 @@ Response:
 
 </details>
 <br>
+
+```
+Delete /api/v2/markets/:market_id/customers/:customer_id/    (Delete an association between a customer and a market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
 
 ---
 
@@ -1534,6 +1579,37 @@ Response:
 <br>
 
 ```
+Post /api/v2/markets/:market_id/vendors/    (Create an association between a vendor and a market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "id": 2
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+
+{
+    "message": "Vendor association created successfully."
+}
+```
+
+</details>
+<br>
+
+```
 Get /api/v2/markets/:market_id/vendors/:vendor_id/ (for a single vendor at that market)
 ```
 
@@ -1566,6 +1642,20 @@ Response:
 
 </details>
 <br>
+
+```
+Delete /api/v2/markets/:market_id/vendors/:vendor_id/    (Delete an association between a vendor and a market)
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
 
 
 ---
