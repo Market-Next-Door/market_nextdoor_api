@@ -13,7 +13,7 @@ def customer_list(request):
     return get_customer_list(request)
   elif request.method == 'POST':
     return create_customer(request)
-  
+
 def get_customer_list(request):
   customers = Customer.objects.all()
   serializer = CustomerSerializer(customers, many=True)
@@ -36,7 +36,7 @@ def customer_details(request, customer_id):
     return update_customer(customer, request)
   elif request.method == 'DELETE':
     return delete_customer(customer)
-  
+
 def get_customer_object(customer_id):
   try:
     return Customer.objects.get(pk=customer_id)

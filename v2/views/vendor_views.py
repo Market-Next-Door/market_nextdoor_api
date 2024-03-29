@@ -60,7 +60,6 @@ def delete_vendor(vendor):
 
 
 # Vendor by Market
-# This endpoint and it's compliment need to have POST and DEL functionality, to create and destroy associations between the market and vendor (VendorMarket objects) and the same needs to happen for CustomerMarket objects. 
 @api_view(['GET', 'POST'])
 def vendors_by_market_list(request, market_id):
   # Input validation
@@ -188,7 +187,7 @@ def preorder_by_vendor_details(request, market_id, vendor_id, preorder_id):
     return get_preorder_vendor_list_details(preorder)
   elif request.method == 'PUT':
     return update_preorder(preorder, request.data)
-  
+
 def get_preorder_vendor_list_details(preorder):
   serializer = PreorderSerializer(preorder)
   return Response(serializer.data, status=status.HTTP_200_OK)
