@@ -62,6 +62,7 @@ class Preorder(models.Model):
 class Market(models.Model):
     market_name = models.CharField(max_length=50)
     location = models.CharField(max_length =100)
+    # listing_id = models.CharField(max_length=50) # This will need to be added to the database for when we get the map component plugged in. 
     details = models.CharField(max_length=100)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
