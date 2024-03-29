@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from ..serializers import CustomerSerializer, PreorderSerializer
-from ..models import Customer, Market, Preorder
+from ..models import Customer, Market, Preorder, CustomerMarket
 import pdb
 
 
@@ -60,22 +60,48 @@ def delete_customer(customer):
 
 
 # Customer by Market
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def customers_by_market_list(request, market_id):
   # Input validation
   if not (isinstance(market_id, int) and market_id > 0):
     return Response({"error": "Invalid market id."}, status=status.HTTP_400_BAD_REQUEST)
-
-  try:
-    market = Market.objects.get(pk=market_id)
-  except Market.DoesNotExist:
-    return Response(stats=status.HTTP_404_NOT_FOUND)
   
+  market = get_market_object(market_id)
+
+  if request.method == 'GET':
+    return get_customers_by_market_list(request, market)
+  elif request.method == 'POST':
+    return create_customer_market(request, market)
+
+def get_market_object(market_id):
+  try:
+    return Market.objects.get(pk=market_id)
+  except Market.DoesNotExist:
+    return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
+
+def get_customers_by_market_list(request, market):
   customers = market.customers.all()
   serializer = CustomerSerializer(customers, many=True)
   return Response(serializer.data)
 
-@api_view(['GET'])
+def create_customer_market(request, market):
+  customer_id = request.data["id"]
+  if (isinstance(customer_id, int) and customer_id > 0):
+
+    try:
+      customer = Customer.objects.get(pk=customer_id)
+    except Customer.DoesNotExist:
+      return Response({"error": "Customer not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if CustomerMarket.objects.filter(customer=customer, market=market).exists():
+      return Response({"error": "Customer is already associated with the market."}, status=status.HTTP_400_BAD_REQUEST)
+
+    CustomerMarket.objects.create(customer=customer, market=market)
+
+    return Response({"message": "Customer was associated successfully."}, status=status.HTTP_201_CREATED)
+  return Response({"error": "Customer ID is invalid."}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'DELETE'])
 def customer_by_market_details(request, customer_id, market_id):
   # Input validation
   if not (isinstance(market_id, int) and market_id > 0):
@@ -83,17 +109,35 @@ def customer_by_market_details(request, customer_id, market_id):
   if not (isinstance(customer_id, int) and customer_id > 0):
     return Response({"error": "Invalid customer id."}, status=status.HTTP_400_BAD_REQUEST)
 
+  market = get_market_object(market_id)
+  customer = get_customer_object(customer_id)
+
+  if request.method == 'GET':
+    return get_customer_by_market_details(customer)
+  elif request.method == 'DELETE':
+    return delete_customer_market(market, customer)
+
+def get_market_object(market_id):
   try:
-    market = Market.objects.get(pk=market_id)
+    return Market.objects.get(pk=market_id)
   except Market.DoesNotExist:
     return Response({"error": "Market not found."}, status=status.HTTP_404_NOT_FOUND)
+
+def get_customer_object(customer_id):
   try:
-    customer = market.customers.get(pk=customer_id)
+    return Customer.objects.get(pk=customer_id)
   except Customer.DoesNotExist:
     return Response({"error": "customer not found."}, status=status.HTTP_404_NOT_FOUND)
 
+def get_customer_by_market_details(customer):
   serializer = CustomerSerializer(customer)
   return Response(serializer.data)
+
+def delete_customer_market(market, customer):
+  # pdb.set_trace()
+  customer_market = CustomerMarket.objects.filter(customer=customer, market=market)
+  customer_market.delete()
+  return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # Customer Preorders
