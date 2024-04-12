@@ -21,7 +21,7 @@ class PreorderModelTest(TestCase):
       last_name="Krueger",
       phone="1234567890",
       email="Info@ElmStBlades.com",
-      location="Springwood, OH"
+      default_zipcode="80013"
       )
     self.vendor2 = Vendor.objects.create(
       vendor_name="Overlook Distillery",
@@ -29,7 +29,7 @@ class PreorderModelTest(TestCase):
       last_name="Torrence",
       phone="1234567890",
       email="JDE@MileHighDrinks.com",
-      location="Stovington, NH"
+      default_zipcode="80013"
       )
     self.item = Item.objects.create(
       item_name= "Axe",

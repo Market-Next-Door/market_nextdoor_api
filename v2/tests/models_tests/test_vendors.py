@@ -13,7 +13,7 @@ class VendorModelTest(TestCase):
         'phone': '1234567890',
         'email': 'john.doe@example.com',
         'password': 'securepassword',
-        'location': 'Test Location',
+        'default_zipcode': "80013"
     }
     self.vendor = Vendor.objects.create(**self.vendor_data)
 
@@ -35,7 +35,7 @@ class VendorModelTest(TestCase):
     self.assertEqual(vendor.phone, self.vendor_data['phone'])
     self.assertEqual(vendor.email, self.vendor_data['email'])
     self.assertEqual(vendor.password, self.vendor_data['password'])
-    self.assertEqual(vendor.location, self.vendor_data['location'])
+    self.assertEqual(vendor.default_zipcode, self.vendor_data['default_zipcode'])
 
   def test_vendor_null_market(self):
     """Test that market is required (null=False)."""
@@ -47,7 +47,7 @@ class VendorModelTest(TestCase):
         phone=self.vendor_data['phone'],
         email=self.vendor_data['email'],
         password=self.vendor_data['password'],
-        location=self.vendor_data['location'],
+        default_zipcode=self.vendor_data['default_zipcode'],
       )
     except ValidationError as e:
       print(f"Exception raised: {repr(e)}")
