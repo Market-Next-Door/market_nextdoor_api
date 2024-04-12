@@ -24,7 +24,7 @@ class ItemSerializerTest(TestCase):
             'phone': '1234567890',
             'email': 'john.doe@example.com',
             'password': 'securepassword',
-            'location': 'Test Location',
+            'default_zipcode': '80013',
             'date_created': '2023-01-01T00:00:00Z',  
             'updated_at': '2023-01-02T00:00:00Z'
         }

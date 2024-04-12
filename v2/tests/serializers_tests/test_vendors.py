@@ -11,7 +11,7 @@ class VendorSerializerTest(TestCase):
       'phone': '1234567890',
       'email': 'john.doe@example.com',
       'password': 'securepassword',
-      'location': 'Test Location',
+      'default_zipcode': '80013',
       'date_created': '2023-01-01T00:00:00Z',  
       'updated_at': '2023-01-02T00:00:00Z',  
     }
@@ -26,7 +26,7 @@ class VendorSerializerTest(TestCase):
       'phone': self.vendor.phone,
       'email': self.vendor.email,
       'password': self.vendor.password,
-      'location': self.vendor.location,
+      'default_zipcode': self.vendor.default_zipcode,
       'date_created': self.vendor.date_created.isoformat(),
       'updated_at': self.vendor.updated_at.isoformat(),
     }

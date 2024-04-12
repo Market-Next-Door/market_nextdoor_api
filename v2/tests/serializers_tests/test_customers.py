@@ -1,7 +1,5 @@
 from rest_framework.test import APITestCase
 from django.test import TestCase
-from django.urls import reverse
-from rest_framework import status
 from v2.serializers import *
 import pdb
 
@@ -13,7 +11,8 @@ class CustomerSerializerTest(TestCase):
       "last_name": "Harrison",
       "phone": "1111111111",
       "email": "gh@gmail.com",
-      "password": "1234"
+      "password": "1234",
+      "default_zipcode": "80013"
     }
     serializer = CustomerSerializer(data=data)
 
@@ -26,7 +25,9 @@ class CustomerSerializerInvalidTest(TestCase):
       "first_name": "George",
       "last_name": "Harrison",
       "phone": "1111111111",
-      "email": "gh@gmail.com"    }
+      "email": "gh@gmail.com",
+      "default_zipcode": "80013" 
+    }
     serializer = CustomerSerializer(data=data)
     self.assertFalse(serializer.is_valid())
 
