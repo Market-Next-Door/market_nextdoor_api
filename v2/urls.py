@@ -52,9 +52,9 @@ urlpatterns = [
     path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders/', vendor_views.preorder_by_vendor_list, name='vendor_preorder_list_v2'),
     path('markets/<int:market_id>/vendors/<int:vendor_id>/preorders/<int:preorder_id>/', vendor_views.preorder_by_vendor_details, name='vendor_preorder_details_v2'),
     # Vendor-Market Associations
-    path('vendors/<int:vendor_id>/markets/', vendor_market_views.vendor_market_list, name='test_name'),
-    path('vendors/<int:vendor_id>/markets/<int:market_id>/', vendor_market_views.vendor_market_details, name='test_name'),
+    path('vendors/<int:vendor_id>/markets/', vendor_market_views.vendor_market_list, name='vendor_market_list'),
+    path('vendors/<int:vendor_id>/markets/<int:market_id>/', vendor_market_views.vendor_market_details, name='vendor_market_details'),
     # Customer-Market Associations
-    path('customers/<int:customer_id>/markets/', customer_market_views.customer_market_list, name='test_name'),
-    path('customers/<int:customer_id>/markets/<int:market_id>/', customer_market_views.customer_market_details, name='test_name')
+    path('customers/<int:customer_id>/markets/', customer_market_views.customer_market_list, name='customer_market_list'),
+    path('customers/<int:customer_id>/markets/<int:market_id>/', customer_market_views.customer_market_details, name='customer_market_details')
 ]
