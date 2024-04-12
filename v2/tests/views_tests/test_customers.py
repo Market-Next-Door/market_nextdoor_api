@@ -11,12 +11,14 @@ class CustomerTestCase(APITestCase):
       last_name="Harrison",
       phone="1234567890",
       email="george@gmail.com",
+      default_zipcode="80013"
     )
     self.customer2 = Customer.objects.create(
       first_name="Janey",
       last_name="Harrison",
       phone="1234567890",
       email="janey@gmail.com",
+      default_zipcode="80013"
     ) 
 
   def test_customer_list(self):
@@ -42,7 +44,8 @@ class CustomerTestCase(APITestCase):
       "last_name": "Harry",
       "phone": "1111111111",
       "email": "jh@gmail.com",
-      "password": "123434"
+      "password": "123434",
+      "default_zipcode": "80013"
     }
     response = self.client.post(url, data)
     self.assertEqual(response.status_code,status.HTTP_201_CREATED )
@@ -52,7 +55,7 @@ class CustomerTestCase(APITestCase):
     self.assertEqual(response.data["last_name"], "Harry")
     self.assertEqual(response.data["phone"], "1111111111")
     self.assertEqual(response.data["email"], "jh@gmail.com")
-    self.assertEqual(response.data["location"], None)
+    self.assertEqual(response.data["default_zipcode"], "80013")
 
   def test_customer_details(self):
     url =  reverse('full_customer_details_v2', args=[self.customer1.pk])
@@ -80,7 +83,7 @@ class CustomerTestCase(APITestCase):
     self.assertEqual(response.data["last_name"], self.customer1.last_name)
     self.assertEqual(response.data["phone"], self.customer1.phone)
     self.assertEqual(response.data["email"], "UPDATE")
-    self.assertEqual(response.data["location"], self.customer1.location)
+    self.assertEqual(response.data["default_zipcode"], self.customer1.default_zipcode)
 
 
   def test_delete_customer(self):

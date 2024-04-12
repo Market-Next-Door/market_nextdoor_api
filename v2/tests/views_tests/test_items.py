@@ -13,7 +13,7 @@ class ItemTestCase(APITestCase):
       phone="123-456-7890",
       email="lets-ketchup@gmail.com",
       password="password",
-      location="123 Zesty St, Tomatotown, USA",
+      default_zipcode="123 Zesty St, Tomatotown, USA",
     )
     self.item1 = Item.objects.create(
       item_name="potato",
