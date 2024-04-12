@@ -26,8 +26,14 @@ def get_customer_market_list(request, check_customer):
 def create_customer_market(request):
     serializer = CustomerMarketSerializer(data=request.data)
     if serializer.is_valid():
+        customer_id = serializer.validated_data['customer']
+        market_id = serializer.validated_data['market']
+
+        if CustomerMarket.objects.filter(customer=customer_id, market=market_id).exists():
+            return Response({"error": "CustomerMarket association already exists."}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer.save()
-        return Response({"message": "CustomerMarket association created."}, serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'DELETE'])

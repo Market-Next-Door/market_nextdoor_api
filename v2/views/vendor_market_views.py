@@ -25,8 +25,14 @@ def get_vendor_market_list(request, check_vendor):
 def create_vendor_market(request):
     serializer = VendorMarketSerializer(data=request.data)
     if serializer.is_valid():
+        vendor_id = serializer.validated_data['vendor']
+        market_id = serializer.validated_data['market']
+
+        if VendorMarket.objects.filter(vendor=vendor_id, market=market_id).exists():
+            return Response({"error": "VendorMarket association already exists."}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer.save()
-        return Response({"message": "VendorMarket association created."}, serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
