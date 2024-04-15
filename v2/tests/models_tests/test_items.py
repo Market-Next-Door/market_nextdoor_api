@@ -13,7 +13,7 @@ class ItemModelTest(TestCase):
       phone="1234567890",
       email="john.doe@example.com",
       password="securepassword",
-      location="Test Location"
+      default_zipcode="Test Location"
     )
 
     self.item_data = {

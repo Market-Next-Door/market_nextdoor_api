@@ -7,13 +7,13 @@ import pdb
 class CustomerSerializer(serializers.ModelSerializer):
   class Meta:
     model = Customer
-    fields = ['id', 'first_name', 'last_name', 'phone', 'email', 'password', 'location', 'date_created', 'updated_at']
+    fields = ['id', 'first_name', 'last_name', 'phone', 'email', 'password', 'default_zipcode', 'date_created', 'updated_at']
 
 # Vendors
 class VendorSerializer(serializers.ModelSerializer):
   class Meta:
     model = Vendor
-    fields = ['id', 'vendor_name', 'first_name', 'last_name', 'phone', 'email', 'password', 'location', 'date_created', 'updated_at']
+    fields = ['id', 'vendor_name', 'first_name', 'last_name', 'phone', 'email', 'password', 'default_zipcode', 'date_created', 'updated_at']
 
 # Items
 class ItemSerializer(serializers.ModelSerializer):
@@ -37,4 +37,15 @@ class PreorderSerializer(serializers.ModelSerializer):
 
   def get_vendor_id(self, obj):
     return obj.item.vendor_id 
-  
+
+# VendorMarkets
+class VendorMarketSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = VendorMarket
+    fields = ['id', 'vendor', 'market', 'active', 'date_created', 'updated_at']
+
+# CustomerMarkets
+class CustomerMarketSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = CustomerMarket
+    fields = ['id', 'customer', 'market', 'date_created', 'updated_at']

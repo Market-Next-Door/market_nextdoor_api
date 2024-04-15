@@ -11,24 +11,22 @@ class VendorPreorderTestCase(APITestCase):
       location="Denver, TX"
     )
     self.vendor1 = Vendor.objects.create(
-      market=self.market,
       vendor_name="All Day Potatoes",
       first_name="George",
       last_name="Harrison",
       phone="1111111111",
       email="1@gmail.com",
       password="1234",
-      location="Denver, CO"
+      default_zipcode="Denver, CO"
     )
     self.vendor2 = Vendor.objects.create(
-      market=self.market,
       vendor_name="secondvendor",
       first_name="2",
       last_name="2",
       phone="1111111111",
       email="1@gmail.com",
       password="1234",
-      location="Denver, CO"
+      default_zipcode="Denver, CO"
     )
     self.vendor_market1 = VendorMarket.objects.create(vendor=self.vendor1, market=self.market)
     self.vendor_market2 = VendorMarket.objects.create(vendor=self.vendor2, market=self.market)
@@ -54,7 +52,7 @@ class VendorPreorderTestCase(APITestCase):
       phone="1222222222",
       email="1@gmail.com",
       password="1234",
-      location="Denver, CO"
+      default_zipcode="Denver, CO"
     )
     self.customer_market = CustomerMarket.objects.create(customer=self.customer, market=self.market)
     self.preorder1 = Preorder.objects.create(

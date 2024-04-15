@@ -11,7 +11,8 @@ class CustomerModelTest(TestCase):
       first_name="George",
       last_name="Harrison",
       phone="1111111111",
-      email="gh@gmail.com"
+      email="gh@gmail.com",
+      default_zipcode="80013"
     )
 
   def test_model_fields(self):
@@ -21,3 +22,4 @@ class CustomerModelTest(TestCase):
       self.assertEqual(customer.last_name, self.customer.last_name)
       self.assertEqual(customer.phone, self.customer.phone)
       self.assertEqual(customer.email, self.customer.email)
+      self.assertEqual(customer.default_zipcode, self.customer.default_zipcode)

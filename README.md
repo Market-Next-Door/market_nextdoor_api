@@ -18,6 +18,7 @@ Welcome to the backend repository of Market Next Door! Market Next Door is a app
     - [Vendors](#vendors)
     - [Items](#items)
     - [Preorders](#preorders)
+    - [Weather](#weather-v2)
   - [V2](#v2)
     - [Markets](#markets)
     - [Customers](#customers)
@@ -27,6 +28,9 @@ Welcome to the backend repository of Market Next Door! Market Next Door is a app
     - [Items](#items)
     - [Customer Preorders](#customer-preorders)
     - [Vendor Preorders](#vendor-preorders)
+    - [Vendor Markets](#vendor-markets)
+    - [Customer Markets](#customer-markets)
+    - [Weather](#weather-v2)
 - [Team](#team)
 ---
 
@@ -1952,6 +1956,8 @@ Delete /api/v2/markets/:market_id/customers/:customer_id/preorders/:preorder_id/
 
 </details>
 
+---
+
 ### Vendor Preorders
 
 ```
@@ -2134,7 +2140,299 @@ Response:
 
 ---
 
-### Weather
+### Vendor Markets
+```
+Get /api/v2/vendors/:vendor_id/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+[
+	{
+		"id": 4,
+		"vendor": 1,
+		"market": 2,
+		"active": true,
+		"date_created": "2024-04-12T12:00:00Z",
+		"updated_at": "2024-04-11T21:42:24.850243Z"
+	},
+	{
+		"id": 12,
+		"vendor": 1,
+		"market": 1,
+		"active": true,
+		"date_created": "2024-04-12T12:00:00Z",
+		"updated_at": "2024-04-11T22:14:46.441837Z"
+	}
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/vendors/:vendor_id/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "vendor": 1,
+    "market": 3
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+{
+    "id": 12,
+    "vendor": 1,
+    "market": 3,
+    "active": true,
+    "date_created": "2024-04-12T12:00:00Z",
+    "updated_at": "2024-04-11T22:14:46.441837Z"
+}
+```
+
+</details>
+<br>
+
+```
+Get /api/v2/vendors/:vendor_id/markets/market_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 4,
+    "vendor": 1,
+    "market": 2,
+    "active": true,
+    "date_created": "2024-04-12T12:00:00Z",
+    "updated_at": "2024-04-11T21:42:24.850243Z"
+}
+```
+
+</details>
+<br>
+
+```
+Put /api/v2/vendors/:vendor_id/markets/:market_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "active": false
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 4,
+    "vendor": 1,
+    "market": 2,
+    "active": false,
+    "date_created": "2024-04-12T12:00:00Z",
+    "updated_at": "2024-04-11T21:42:24.850243Z"
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/vendors/:vendor_id/markets/:market_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+---
+
+### Customer Markets
+```
+Get /api/v2/customers/:customer_id/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+[
+	{
+		"id": 4,
+		"customer": 1,
+		"market": 2,
+		"active": true,
+		"date_created": "2024-04-12T12:00:00Z",
+		"updated_at": "2024-04-11T21:42:24.850243Z"
+	},
+	{
+		"id": 12,
+		"customer": 1,
+		"market": 1,
+		"active": true,
+		"date_created": "2024-04-12T12:00:00Z",
+		"updated_at": "2024-04-11T22:14:46.441837Z"
+	}
+]
+```
+
+</details>
+<br>
+
+```
+Post /api/v2/customers/:customer_id/markets/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```json
+{
+    "customer": 1,
+    "market": 3
+}
+```
+
+| Code | Description |
+| :--- | :--- |
+| 201 | `Created` |
+
+Response:
+
+```json
+{
+    "id": 12,
+    "customer": 1,
+    "market": 3,
+    "active": true,
+    "date_created": "2024-04-12T12:00:00Z",
+    "updated_at": "2024-04-11T22:14:46.441837Z"
+}
+```
+
+</details>
+<br>
+
+```
+Get /api/v2/customers/:customer_id/markets/market_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+Request: <br>
+```
+No Parameters
+```
+
+| Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+
+Response:
+
+```json
+{
+    "id": 4,
+    "customer": 1,
+    "market": 2,
+    "date_created": "2024-04-12T12:00:00Z",
+    "updated_at": "2024-04-11T21:42:24.850243Z"
+}
+```
+
+</details>
+<br>
+
+```
+Delete /api/v2/customers/:customer_id/markets/:market_id/
+```
+
+<details close>
+<summary> Endpoint Details </summary>
+<br>
+
+| Code | Description |
+| :--- | :--- |
+| 204 | `No Content` |
+
+</details>
+
+---
+
+### Weather V2
 
 ```
 Get /api/v2/weather/

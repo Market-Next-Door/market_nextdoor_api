@@ -13,7 +13,7 @@ class VendorTestCase(APITestCase):
       phone="1234567890",
       email="timmy@gmail.com",
       password="1234567890",
-      location="1234 Main St, Anytown, USA",
+      default_zipcode="80013"
     )
     self.vendor2 = Vendor.objects.create(
       vendor_name="Jimmy's Veggies",
@@ -22,7 +22,7 @@ class VendorTestCase(APITestCase):
       phone="1234567890",
       email="timmy@gmail.com",
       password="1234567890",
-      location="1234 Main St, Anytown, USA",
+      default_zipcode="80013"
     )
 
   def test_vendor_list(self):
@@ -37,14 +37,14 @@ class VendorTestCase(APITestCase):
     self.assertEqual(response.data[0]["last_name"], self.vendor1.last_name)
     self.assertEqual(response.data[0]["phone"], self.vendor1.phone)
     self.assertEqual(response.data[0]["email"], self.vendor1.email)
-    self.assertEqual(response.data[0]["location"], self.vendor1.location)
+    self.assertEqual(response.data[0]["default_zipcode"], self.vendor1.default_zipcode)
     self.assertEqual(response.data[1]["id"], self.vendor2.id)
     self.assertEqual(response.data[1]["vendor_name"], self.vendor2.vendor_name)
     self.assertEqual(response.data[1]["first_name"], self.vendor2.first_name)
     self.assertEqual(response.data[1]["last_name"], self.vendor2.last_name)
     self.assertEqual(response.data[1]["phone"], self.vendor2.phone)
     self.assertEqual(response.data[1]["email"], self.vendor2.email)
-    self.assertEqual(response.data[1]["location"], self.vendor2.location)
+    self.assertEqual(response.data[1]["default_zipcode"], self.vendor2.default_zipcode)
 
   def test_post_vendor(self):
 
@@ -56,7 +56,7 @@ class VendorTestCase(APITestCase):
       "phone": "1111111111",
       "email": "jh@gmail.com",
       "password": "123434",
-      "location": "1234 Main St, Anytown, USA"
+      "default_zipcode": "80013"
     }
     response = self.client.post(url, data)
     self.assertEqual(response.status_code,status.HTTP_201_CREATED )
@@ -67,7 +67,7 @@ class VendorTestCase(APITestCase):
     self.assertEqual(response.data["last_name"], "Harry")
     self.assertEqual(response.data["phone"], "1111111111")
     self.assertEqual(response.data["email"], "jh@gmail.com"),
-    self.assertEqual(response.data["location"], "1234 Main St, Anytown, USA")
+    self.assertEqual(response.data["default_zipcode"], "80013")
 
   def test_vendor_details(self):
     url =  reverse('full_vendor_details_v2', args=[self.vendor1.pk])
@@ -79,7 +79,7 @@ class VendorTestCase(APITestCase):
     self.assertEqual(response.data["last_name"], self.vendor1.last_name)
     self.assertEqual(response.data["phone"], self.vendor1.phone)
     self.assertEqual(response.data["email"], self.vendor1.email)
-    self.assertEqual(response.data["location"], self.vendor1.location)
+    self.assertEqual(response.data["default_zipcode"], self.vendor1.default_zipcode)
 
   def test_update_vendor(self):
     url =  reverse('full_vendor_details_v2', args=[self.vendor1.pk])
@@ -90,7 +90,7 @@ class VendorTestCase(APITestCase):
       "phone": "1111111111",
       "email": "jh@gmail.com",
       "password": "123434",
-      "location": "1234 Main St, Anytown, USA"
+      "default_zipcode": "80013"
     }
     response = self.client.put(url, data, format='json')
     self.assertEqual(response.status_code,status.HTTP_200_OK )
@@ -101,7 +101,7 @@ class VendorTestCase(APITestCase):
     self.assertEqual(response.data["last_name"], "Harry")
     self.assertEqual(response.data["phone"], "1111111111")
     self.assertEqual(response.data["email"], "jh@gmail.com"),
-    self.assertEqual(response.data["location"], "1234 Main St, Anytown, USA")
+    self.assertEqual(response.data["default_zipcode"], "80013")
 
   def test_delete_vendor(self):
     vendor_id = 1
@@ -110,5 +110,3 @@ class VendorTestCase(APITestCase):
     response = self.client.delete(url)
     self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT )
     self.assertEqual(Vendor.objects.count(), 1)
-    
-                     

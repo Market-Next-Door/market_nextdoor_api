@@ -23,7 +23,7 @@ class PreorderViewTests(TestCase):
         last_name="Person",
         phone="9876543210",
         email="vendor@example.com",
-        location="Sample Location"
+        default_zipcode="80013"
     )
     self.vendor_market = VendorMarket.objects.create(vendor=self.vendor, market=self.market)
     self.customer_market = CustomerMarket.objects.create(customer=self.customer, market=self.market)
