@@ -24,6 +24,10 @@ def get_market_list(request):
 def create_market(request):
   serializer = MarketSerializer(data=request.data)
   if serializer.is_valid():
+    
+    if Market.objects.filter(listing_id=serializer.listing_id).exists():
+      return Response({"error": "Market already in database."})
+    
     serializer.save()
     return Response(serializer.data, status=status.HTTP_201_CREATED)
   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
